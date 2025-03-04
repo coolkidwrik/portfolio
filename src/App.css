@@ -47,11 +47,11 @@ html, body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-}
+} 
 
 canvas {
-  display: block; /* Prevents default inline spacing */
-  position: absolute; /* Ensures full coverage */
+  display: block; 
+  position: absolute; 
   top: 0;
   left: 0;
   width: 100%;

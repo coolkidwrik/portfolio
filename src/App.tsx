@@ -3,21 +3,29 @@ import './App.css'
 
 import * as THREE from 'three';
 import { setup } from './utils/setup.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 // import bgimage from './assets/images/image.png';
 
+// Import the GLB file
+import spaceBoi from './assets/glb/space_boi.glb';
+
+// post processing
+/////////////////////////////////////////////////////////
 import {RenderPass} from 'three/examples/jsm/postprocessing/RenderPass.js';
 import {EffectComposer} from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import {UnrealBloomPass} from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
-
 /////////////////////////////////////////////////////////
+
 // get glsl code
 /////////////////////////////////////////////////////////
 // import raw code from files
 // diamond shader
 import diamondVS from './utils/glsl/Diamond/diamond.vs.glsl?raw';
 import diamondFS from './utils/glsl/Diamond/diamond.fs.glsl?raw';
-
 /////////////////////////////////////////////////////////
+
+
+
 
 function App() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -59,6 +67,33 @@ function App() {
     // time ticks
     const ticks = { type: "f", value: 0.0 };
 
+    // define glb
+    /////////////////////////////////////////////////////////
+    // define glb
+    let anti_spiral_glb: THREE.Group | undefined;
+    let astronaut_glb: THREE.Group | undefined;
+    
+    {
+      interface GLTFLoaderResult {
+        scene: THREE.Group;
+      }
+
+      const gltfLoader = new GLTFLoader();
+
+      // load anti spiral
+      gltfLoader.load(
+        spaceBoi,
+        (gltf) => {
+          anti_spiral_glb = gltf.scene;
+          scene.add(anti_spiral_glb); // Add the loaded model to the scene
+        },
+        undefined, // Progress callback (optional)
+        (error) => {
+          console.error('Error loading GLB model:', error);
+        }
+      );
+    }
+
     // define geometry
     /////////////////////////////////////////////////////////
     // sphere
@@ -89,22 +124,28 @@ function App() {
 
     // add elements to the scene
     /////////////////////////////////////////////////////////
-    scene.add(ball);
+    // scene.add(ball);
+
 
 
 
 
     let isMounted = true;
-  
+    // animate
     function update() {
       if (!isMounted) return;  // Prevent updates after unmount
 
       // update uniforms
       ticks.value += 0.01;
 
+      // rotate
+      // ball.rotation.x += 0.01;
+      // ball.rotation.y += 0.01;
+      if (anti_spiral_glb) {
+        anti_spiral_glb.rotation.y += 0.001;
+      }
 
-      ball.rotation.x += 0.01;
-      ball.rotation.y += 0.01;
+
       // renderer.render(scene, camera);
       composer.render();
       requestAnimationFrame(update);
