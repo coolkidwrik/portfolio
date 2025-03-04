@@ -8,6 +8,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 // Import the GLB file
 import spaceBoi from './assets/glb/space_boi.glb';
+import spaceMan from './assets/glb/space_man.glb';
 
 // post processing
 /////////////////////////////////////////////////////////
@@ -29,6 +30,8 @@ import diamondFS from './utils/glsl/Diamond/diamond.fs.glsl?raw';
 
 function App() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const mixerRef = useRef<THREE.AnimationMixer | null>(null);
+  const clockRef = useRef(new THREE.Clock());
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -72,7 +75,7 @@ function App() {
     // define glb
     let anti_spiral_glb: THREE.Group | undefined;
     let astronaut_glb: THREE.Group | undefined;
-    
+
     {
       interface GLTFLoaderResult {
         scene: THREE.Group;
@@ -90,6 +93,31 @@ function App() {
         undefined, // Progress callback (optional)
         (error) => {
           console.error('Error loading GLB model:', error);
+        }
+      );
+
+      // load astronaut
+      // Load the Spaceman GLB model (animated)
+      gltfLoader.load(
+        spaceMan, // Use the imported URL
+        (gltf) => {
+          const spaceman = gltf.scene;
+          spaceman.scale.set(1, 1, 1); // Adjust scale if needed
+          spaceman.position.set(2, 2, 7); // Adjust position if needed
+          spaceman.rotation.set(0, 2.0, 0); // Adjust rotation if needed
+          scene.add(spaceman); // Add the loaded model to the scene
+
+          // Set up the animation mixer
+          mixerRef.current = new THREE.AnimationMixer(spaceman);
+
+          // Play the "Idle" animation
+          const clip = THREE.AnimationClip.findByName(gltf.animations, 'Idle');
+          const action = mixerRef.current.clipAction(clip);
+          action.play();
+        },
+        undefined, // Progress callback (optional)
+        (error) => {
+          console.error('Error loading Spaceman GLB model:', error);
         }
       );
     }
@@ -143,6 +171,11 @@ function App() {
       // ball.rotation.y += 0.01;
       if (anti_spiral_glb) {
         anti_spiral_glb.rotation.y += 0.001;
+      }
+
+      if (mixerRef.current) {
+        const delta = clockRef.current.getDelta(); // Get the time delta
+        mixerRef.current.update(delta); // Advance the animation
       }
 
 
