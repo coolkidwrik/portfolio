@@ -4,7 +4,7 @@ import './App.css'
 import * as THREE from 'three';
 import { setup } from './utils/setup.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-// import bgimage from './assets/images/image.png';
+import bgimage from './assets/images/void.png';
 
 // Import the GLB file
 import spaceBoi from './assets/glb/space_boi.glb';
@@ -56,13 +56,13 @@ function App() {
 
 
     // Load background texture
-    // const loader = new THREE.TextureLoader();
-    // loader.load(bgimage, (texture) => {
-    //   texture.colorSpace = THREE.SRGBColorSpace; // Ensures correct color space
-    //   scene.background = texture;
-    // }, undefined, (error) => {
-    //   console.error('Error loading texture:', error);
-    // });
+    const loader = new THREE.TextureLoader();
+    loader.load(bgimage, (texture) => {
+      texture.colorSpace = THREE.SRGBColorSpace; // Ensures correct color space
+      scene.background = texture;
+    }, undefined, (error) => {
+      console.error('Error loading texture:', error);
+    });
   
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
     scene.add(ambientLight);
@@ -146,13 +146,19 @@ function App() {
 
     // define mesh
     /////////////////////////////////////////////////////////
-    const ball = new THREE.Mesh(sphereGeometry, diamondMaterial);
+    const ball1 = new THREE.Mesh(sphereGeometry, diamondMaterial);
+    const ball2 = new THREE.Mesh(sphereGeometry, diamondMaterial);
+    ball1.scale.set(0.2, 0.2, 0.2);
+    ball1.position.set(2, 2.8, 7);
+    ball2.scale.set(1.2, 1.2, 1.2);
+    ball2.position.set(0, 6, 0);
   
 
 
     // add elements to the scene
     /////////////////////////////////////////////////////////
-    // scene.add(ball);
+    scene.add(ball1);
+    scene.add(ball2);
 
 
 
@@ -167,8 +173,8 @@ function App() {
       ticks.value += 0.01;
 
       // rotate
-      // ball.rotation.x += 0.01;
-      // ball.rotation.y += 0.01;
+      ball2.rotation.x += 0.001;
+      ball2.rotation.y += 0.005;
       if (anti_spiral_glb) {
         anti_spiral_glb.rotation.y += 0.001;
       }
