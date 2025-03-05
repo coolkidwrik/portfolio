@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 function setup(canvas: HTMLCanvasElement) {
     // Create a scene
@@ -9,8 +9,8 @@ function setup(canvas: HTMLCanvasElement) {
 
     // Create a camera
     const camera = new THREE.PerspectiveCamera(75, w / h, 0.1, 1000);
-    camera.position.z = 10;
-    camera.position.y = 3;
+    camera.position.z = 9.5;
+    camera.position.y = 2;
 
     // Create a renderer
     const renderer = new THREE.WebGLRenderer({
@@ -24,7 +24,7 @@ function setup(canvas: HTMLCanvasElement) {
     renderer.toneMappingExposure = 2.0;
 
     // Setup orbit controls for the camera.
-    new OrbitControls(camera, renderer.domElement);
+    // new OrbitControls(camera, renderer.domElement);
 
     // Handle window resize
     function handleWindowResize() {

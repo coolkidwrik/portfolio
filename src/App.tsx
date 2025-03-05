@@ -1,251 +1,30 @@
-import { useEffect , useRef} from 'react'
-import './App.css'
+import { useEffect, useRef } from 'react';
+import './App.css';
+import { BrowserRouter } from "react-router-dom";
 
-import * as THREE from 'three';
-import { setup } from './utils/setup.js';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import bgimage from './assets/images/void.png';
-
-// Import the GLB file
-import spaceBoi from './assets/glb/space_boi.glb';
-import spaceMan from './assets/glb/space_man.glb';
-import legoMan from './assets/glb/benny.glb';
-
-
-// post processing
-/////////////////////////////////////////////////////////
-import {RenderPass} from 'three/examples/jsm/postprocessing/RenderPass.js';
-import {EffectComposer} from 'three/examples/jsm/postprocessing/EffectComposer.js';
-import {UnrealBloomPass} from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
-/////////////////////////////////////////////////////////
-
-// get glsl code
-/////////////////////////////////////////////////////////
-// import raw code from files
-// diamond shader
-import diamondVS from './utils/glsl/Diamond/diamond.vs.glsl?raw';
-import diamondFS from './utils/glsl/Diamond/diamond.fs.glsl?raw';
-
-// noise shader
-import noiseVS from './utils/glsl/Normal_Noise/noise.vs.glsl?raw';
-import noiseFS from './utils/glsl/Normal_Noise/noise.fs.glsl?raw';
-/////////////////////////////////////////////////////////
-
-
-
+import { introCanvas } from './utils/introCanvas';
 
 function App() {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const mixerRef = useRef<THREE.AnimationMixer | null>(null);
-  const clockRef = useRef(new THREE.Clock());
+  const canvasRef = useRef(null);
 
   useEffect(() => {
-    if (!canvasRef.current) return;
-  
-    const { renderer, scene, camera } = setup(canvasRef.current);
-
-    // post processing
-    const renderPass = new RenderPass(scene, camera);
-    const composer = new EffectComposer(renderer);
-    composer.addPass(renderPass);
-
-    // Bloom pass
-    const bloomPass = new UnrealBloomPass(
-      new THREE.Vector2(window.innerWidth, window.innerHeight), 
-      1.5, // strength
-      0.4, // radius
-      0.85 // threshold
-    );
-
-    composer.addPass(bloomPass);
-
-
-
-    // Load background texture
-    const loader = new THREE.TextureLoader();
-    loader.load(bgimage, (texture) => {
-      texture.colorSpace = THREE.SRGBColorSpace; // Ensures correct color space
-      scene.background = texture;
-    }, undefined, (error) => {
-      console.error('Error loading texture:', error);
-    });
-  
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-    scene.add(ambientLight);
-
-    // time ticks
-    const ticks = { type: "f", value: 0.0 };
-
-    // define glb
-    /////////////////////////////////////////////////////////
-    // define glb
-    let anti_spiral: THREE.Group | undefined;
-    let spaceman: THREE.Group | undefined;
-    let benny: THREE.Group | undefined;
-
-    {
-      const gltfLoader = new GLTFLoader();
-
-      // load anti spiral
-      gltfLoader.load(
-        spaceBoi,
-        (gltf) => {
-          anti_spiral = gltf.scene;
-          scene.add(anti_spiral); // Add the loaded model to the scene
-        },
-        undefined, // Progress callback (optional)
-        (error) => {
-          console.error('Error loading GLB model:', error);
-        }
-      );
-
-      // load astronaut
-      // Load the Spaceman GLB model (animated)
-      gltfLoader.load(
-        spaceMan, // Use the imported URL
-        (gltf) => {
-          spaceman = gltf.scene;
-          spaceman.scale.set(1, 1, 1); 
-          spaceman.position.set(2, 2, 7); 
-          spaceman.rotation.set(0, 2.0, 0); 
-          scene.add(spaceman); // Add the loaded model to the scene
-
-          // Set up the animation mixer
-          mixerRef.current = new THREE.AnimationMixer(spaceman);
-
-          // Play the "Idle" animation
-          const clip = THREE.AnimationClip.findByName(gltf.animations, 'Idle');
-          const action = mixerRef.current.clipAction(clip);
-          action.play();
-        },
-        undefined, // Progress callback (optional)
-        (error) => {
-          console.error('Error loading Spaceman GLB model:', error);
-        }
-      );
-
-      // load benny
-      gltfLoader.load(
-        legoMan,
-        (gltf) => {
-          benny = gltf.scene;
-          scene.add(benny); // Add the loaded model to the scene
-          benny.scale.set(0.005, 0.005, 0.005);
-        },
-        undefined, // Progress callback (optional)
-        (error) => {
-          console.error('Error loading GLB model:', error);
-        }
-      );
-    }
-
-    // define geometry
-    /////////////////////////////////////////////////////////
-    // sphere
-    const sphereGeometry = new THREE.IcosahedronGeometry(0.8, 12);;
-
-    /////////////////////////////////////////////////////////
-
-    // define materials
-    /////////////////////////////////////////////////////////
-    // DIAMOND
-    const diamondMaterial = new THREE.ShaderMaterial({
-      uniforms: {
-        ticks: ticks
-      },
-      vertexShader: diamondVS,
-      fragmentShader: diamondFS,
-      transparent: true,
-      depthWrite: false, // Prevents z-fighting issues with transparent objects
-    });
-
-    // NOISE
-    const noiseMaterial = new THREE.ShaderMaterial({
-      uniforms: {
-        ticks: ticks
-      },
-      vertexShader: noiseVS,
-      fragmentShader: noiseFS,
-    });
-    /////////////////////////////////////////////////////////
-
-    // define mesh
-    /////////////////////////////////////////////////////////
-    const ball1 = new THREE.Mesh(sphereGeometry, noiseMaterial);
-    const ball2 = new THREE.Mesh(sphereGeometry, diamondMaterial);
-    ball1.scale.set(0.2, 0.2, 0.2);
-    ball1.position.set(2, 2.8, 7.2);
-    ball2.scale.set(1.2, 1.2, 1.2);
-    ball2.position.set(0, 6, 0);
-  
-
-
-    // add elements to the scene
-    /////////////////////////////////////////////////////////
-    scene.add(ball1);
-    scene.add(ball2);
-
-
-
-
-
-    let isMounted = true;
-    // animate
-    function update() {
-      if (!isMounted) return;  // Prevent updates after unmount
-
-      // update uniforms
-      ticks.value += 0.01;
-
-      // rotate
-      ball2.rotation.x += 0.001;
-      ball2.rotation.y += 0.005;
-      if (anti_spiral) {
-        anti_spiral.rotation.y += 0.001;
-      }
-
-      if (mixerRef.current) {
-        const delta = clockRef.current.getDelta(); // Get the time delta
-        mixerRef.current.update(delta); // Advance the animation
-      }
-
-      // benny orbit
-      if (benny) {
-        let sin = Math.sin(0.1*ticks.value);
-        let cos = Math.cos(0.1*ticks.value);
-        let radius = 3;
-
-        benny.position.x = radius * cos;
-        benny.position.z = radius * sin;
-        benny.position.y = 0.2 * Math.sin(2 * ticks.value) + 2;
-        benny.rotateOnAxis(new THREE.Vector3(0, 1, 0), -0.001);
-      }
-
-
-
-      // renderer.render(scene, camera);
-      composer.render();
-      requestAnimationFrame(update);
-    }
-  
-    update();
-  
-    return () => {
-      isMounted = false; // Stop animation
-      renderer.dispose(); // Dispose of the WebGL context
-      window.removeEventListener('resize', () => {}); // Remove resize listener
-    };
+    const cleanup = introCanvas(canvasRef);
+    return cleanup; // Cleanup on unmount
   }, []);
-
-
-
-
 
   return (
     <div className="App">
-      <canvas id="threejscanvas" ref={canvasRef} />
+      <BrowserRouter>
+        <canvas id="threejscanvas" ref={canvasRef} />
+        <div className="content">
+          <h1>Welcome to the Section Below the Canvas</h1>
+          <p>This is some content below the Three.js canvas. You can scroll down to see more.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam scelerisque ipsum vitae lacus tincidunt, vel tincidunt nisi tincidunt.</p>
+          <p>More content here...</p>
+        </div>
+      </BrowserRouter>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
