@@ -23,6 +23,10 @@ import {UnrealBloomPass} from 'three/examples/jsm/postprocessing/UnrealBloomPass
 // diamond shader
 import diamondVS from './utils/glsl/Diamond/diamond.vs.glsl?raw';
 import diamondFS from './utils/glsl/Diamond/diamond.fs.glsl?raw';
+
+// noise shader
+import noiseVS from './utils/glsl/Normal_Noise/noise.vs.glsl?raw';
+import noiseFS from './utils/glsl/Normal_Noise/noise.fs.glsl?raw';
 /////////////////////////////////////////////////////////
 
 
@@ -77,10 +81,6 @@ function App() {
     let astronaut_glb: THREE.Group | undefined;
 
     {
-      interface GLTFLoaderResult {
-        scene: THREE.Group;
-      }
-
       const gltfLoader = new GLTFLoader();
 
       // load anti spiral
@@ -141,15 +141,23 @@ function App() {
       transparent: true,
       depthWrite: false, // Prevents z-fighting issues with transparent objects
     });
-    
+
+    // NOISE
+    const noiseMaterial = new THREE.ShaderMaterial({
+      uniforms: {
+        ticks: ticks
+      },
+      vertexShader: noiseVS,
+      fragmentShader: noiseFS,
+    });
     /////////////////////////////////////////////////////////
 
     // define mesh
     /////////////////////////////////////////////////////////
-    const ball1 = new THREE.Mesh(sphereGeometry, diamondMaterial);
+    const ball1 = new THREE.Mesh(sphereGeometry, noiseMaterial);
     const ball2 = new THREE.Mesh(sphereGeometry, diamondMaterial);
     ball1.scale.set(0.2, 0.2, 0.2);
-    ball1.position.set(2, 2.8, 7);
+    ball1.position.set(2, 2.8, 7.2);
     ball2.scale.set(1.2, 1.2, 1.2);
     ball2.position.set(0, 6, 0);
   
