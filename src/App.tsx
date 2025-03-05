@@ -9,6 +9,8 @@ import bgimage from './assets/images/void.png';
 // Import the GLB file
 import spaceBoi from './assets/glb/space_boi.glb';
 import spaceMan from './assets/glb/space_man.glb';
+import legoMan from './assets/glb/benny.glb';
+
 
 // post processing
 /////////////////////////////////////////////////////////
@@ -77,8 +79,9 @@ function App() {
     // define glb
     /////////////////////////////////////////////////////////
     // define glb
-    let anti_spiral_glb: THREE.Group | undefined;
-    let astronaut_glb: THREE.Group | undefined;
+    let anti_spiral: THREE.Group | undefined;
+    let spaceman: THREE.Group | undefined;
+    let benny: THREE.Group | undefined;
 
     {
       const gltfLoader = new GLTFLoader();
@@ -87,8 +90,8 @@ function App() {
       gltfLoader.load(
         spaceBoi,
         (gltf) => {
-          anti_spiral_glb = gltf.scene;
-          scene.add(anti_spiral_glb); // Add the loaded model to the scene
+          anti_spiral = gltf.scene;
+          scene.add(anti_spiral); // Add the loaded model to the scene
         },
         undefined, // Progress callback (optional)
         (error) => {
@@ -101,10 +104,10 @@ function App() {
       gltfLoader.load(
         spaceMan, // Use the imported URL
         (gltf) => {
-          const spaceman = gltf.scene;
-          spaceman.scale.set(1, 1, 1); // Adjust scale if needed
-          spaceman.position.set(2, 2, 7); // Adjust position if needed
-          spaceman.rotation.set(0, 2.0, 0); // Adjust rotation if needed
+          spaceman = gltf.scene;
+          spaceman.scale.set(1, 1, 1); 
+          spaceman.position.set(2, 2, 7); 
+          spaceman.rotation.set(0, 2.0, 0); 
           scene.add(spaceman); // Add the loaded model to the scene
 
           // Set up the animation mixer
@@ -118,6 +121,20 @@ function App() {
         undefined, // Progress callback (optional)
         (error) => {
           console.error('Error loading Spaceman GLB model:', error);
+        }
+      );
+
+      // load benny
+      gltfLoader.load(
+        legoMan,
+        (gltf) => {
+          benny = gltf.scene;
+          scene.add(benny); // Add the loaded model to the scene
+          benny.scale.set(0.005, 0.005, 0.005);
+        },
+        undefined, // Progress callback (optional)
+        (error) => {
+          console.error('Error loading GLB model:', error);
         }
       );
     }
@@ -183,14 +200,27 @@ function App() {
       // rotate
       ball2.rotation.x += 0.001;
       ball2.rotation.y += 0.005;
-      if (anti_spiral_glb) {
-        anti_spiral_glb.rotation.y += 0.001;
+      if (anti_spiral) {
+        anti_spiral.rotation.y += 0.001;
       }
 
       if (mixerRef.current) {
         const delta = clockRef.current.getDelta(); // Get the time delta
         mixerRef.current.update(delta); // Advance the animation
       }
+
+      // benny orbit
+      if (benny) {
+        let sin = Math.sin(0.1*ticks.value);
+        let cos = Math.cos(0.1*ticks.value);
+        let radius = 3;
+
+        benny.position.x = radius * cos;
+        benny.position.z = radius * sin;
+        benny.position.y = 0.2 * Math.sin(2 * ticks.value) + 2;
+        benny.rotateOnAxis(new THREE.Vector3(0, 1, 0), -0.001);
+      }
+
 
 
       // renderer.render(scene, camera);
