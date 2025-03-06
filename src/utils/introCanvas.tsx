@@ -26,7 +26,6 @@ import diamondFS from '../utils/glsl/Diamond/diamond.fs.glsl?raw';
 // noise shader
 import noiseVS from '../utils/glsl/Normal_Noise/noise.vs.glsl?raw';
 import noiseFS from '../utils/glsl/Normal_Noise/noise.fs.glsl?raw';
-import { use, useEffect } from 'react';
 /////////////////////////////////////////////////////////
 
 

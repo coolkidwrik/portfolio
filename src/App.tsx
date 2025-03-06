@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef , useState} from 'react';
 import './App.css';
 import { BrowserRouter } from "react-router-dom";
 
@@ -6,10 +6,22 @@ import { introCanvas } from './utils/introCanvas';
 
 function App() {
   const canvasRef = useRef(null);
+  const [showText, setShowText] = useState(false);
 
   useEffect(() => {
     const cleanup = introCanvas(canvasRef);
-    return cleanup; // Cleanup on unmount
+    
+    // Trigger text to show after 2 seconds
+    const timer = setTimeout(() => {
+      setShowText(true);
+    }, 2000);
+
+    return () => {
+      if (typeof cleanup === 'function') {
+        cleanup(); // Call cleanup if it's a function. Cleanup Three.js resources on unmount
+      }
+      clearTimeout(timer); // Cleanup timer
+    };
   }, []);
 
   return (
@@ -21,8 +33,10 @@ function App() {
           
           {/* Overlay text */}
           <div className="absolute top-[42%] left-[8%] text-white">
-            <h1 className='text-[5rem]'>Wrik Steven Sen</h1>
-            <h3 className='text-[2rem]'>Software Engineer</h3>
+            <div className={`animated-text ${showText ? 'show' : ''}`}>
+              <h1 className='text-[5rem]'>Wrik Steven Sen</h1>
+              <h3 className='text-[2rem]'>Software Engineer</h3>
+            </div>
           </div>
         </div>
         <div className="content">
