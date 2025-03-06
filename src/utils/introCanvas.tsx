@@ -179,29 +179,29 @@ export const introCanvas = (canvasRef: React.RefObject<HTMLCanvasElement | null>
     scene.add(ball2);
 
 
-    // scrolling
+    // update camera position
     /////////////////////////////////////////////////////////
-    // // Track scroll position
-    // let scrollY = window.scrollY;
-    // const maxScroll = document.body.scrollHeight - window.innerHeight;
+    const updateCameraPosition = () => {
+        if (!isMounted) return;
+        
+        const scrollY = window.scrollY;
+        const maxScroll = window.innerHeight * 2; // Adjust the max scroll range
+        const normalizedScroll = Math.min(scrollY / maxScroll, 1); // Normalize to [0,1]
+        
+        camera.position.y = 2 - normalizedScroll * 25; // Move y from 2 to 0
+        camera.position.z = 9.5 - normalizedScroll * 30; // Move y from 2 to 0
 
-    // // Update camera position based on scroll
-    // const updateCameraPosition = () => {
-    //   scrollY = window.scrollY;
+        if (camera.position.y <= 0) {
+            document.body.style.overflow = 'auto'; // Enable normal scrolling
+        }
+    };
 
-    //   // Map scroll position to camera y-position (from 2 to 0)
-    //   const targetY = THREE.MathUtils.lerp(2, 0, scrollY / maxScroll);
-
-    //   // Smoothly interpolate camera position
-    //   camera.position.y = THREE.MathUtils.lerp(camera.position.y, targetY, 0.1);
-    // };
-
-    // // Add scroll event listener
-    // window.addEventListener('scroll', updateCameraPosition);
+    window.addEventListener('scroll', updateCameraPosition);
 
 
 
     let isMounted = true;
+
     // animate
     function update() {
       if (!isMounted) return;  // Prevent updates after unmount
@@ -216,13 +216,18 @@ export const introCanvas = (canvasRef: React.RefObject<HTMLCanvasElement | null>
         anti_spiral.rotation.y += 0.001;
       }
 
+      if (spaceman) {
+        spaceman.position.y = 0.01 * Math.sin(0.5 * ticks.value) + 2.0;
+        spaceman.rotation.x += 0.0004 * Math.sin(0.5 * ticks.value);
+        ball1.position.y = 0.1 * Math.sin(0.2 * ticks.value) + 2.6;
+      }
+
       // benny orbit
       if (benny) {
         benny.position.y = 0.2 * Math.sin(2 * ticks.value) + 0.3;
         // benny.rotateOnAxis(new THREE.Vector3(0, 1, 0), -0.001);
       }
 
-    //   updateCameraPosition();
 
       // renderer.render(scene, camera);
       composer.render();
@@ -234,7 +239,7 @@ export const introCanvas = (canvasRef: React.RefObject<HTMLCanvasElement | null>
     return () => {
       isMounted = false; // Stop animation
       renderer.dispose(); // Dispose of the WebGL context
-    //   window.removeEventListener('scroll', updateCameraPosition); // Remove scroll listener
+      window.removeEventListener('scroll', updateCameraPosition);
       window.removeEventListener('resize', () => {}); // Remove resize listener
     };
 }

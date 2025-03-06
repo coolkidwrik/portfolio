@@ -10,7 +10,7 @@ function setup(canvas: HTMLCanvasElement) {
     // Create a camera
     const camera = new THREE.PerspectiveCamera(75, w / h, 0.1, 1000);
     camera.position.z = 9.5;
-    camera.position.y = 2;
+    camera.position.y = 2.2;
 
     // Create a renderer
     const renderer = new THREE.WebGLRenderer({

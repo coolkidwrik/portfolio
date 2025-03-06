@@ -7,6 +7,5 @@
   "compilerOptions": {
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "include": ["src", "vite-env.d.ts"] // Add this line
   }
 }
