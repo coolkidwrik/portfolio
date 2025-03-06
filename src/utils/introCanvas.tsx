@@ -26,6 +26,7 @@ import diamondFS from '../utils/glsl/Diamond/diamond.fs.glsl?raw';
 // noise shader
 import noiseVS from '../utils/glsl/Normal_Noise/noise.vs.glsl?raw';
 import noiseFS from '../utils/glsl/Normal_Noise/noise.fs.glsl?raw';
+import { use, useEffect } from 'react';
 /////////////////////////////////////////////////////////
 
 
@@ -178,6 +179,31 @@ export const introCanvas = (canvasRef: React.RefObject<HTMLCanvasElement | null>
     scene.add(ball1);
     scene.add(ball2);
 
+
+    // Move camera from initial position to target
+    /////////////////////////////////////////////////////////
+    let startTime = Date.now();
+    const initialCameraPosition = { ...camera.position }; // Store initial camera position
+    const targetCameraPosition = { x: 0, y: 2.2, z: 9.5 };   // Target position
+    const duration = 2000;  // 2 seconds duration
+
+    const animateCamera = () => {
+    const elapsed = Date.now() - startTime;
+    const progress = Math.min(elapsed / duration, 1);  // Progress value between 0 and 1
+
+    // Lerp (Linear Interpolate) the camera position
+    camera.position.y = initialCameraPosition.y + (targetCameraPosition.y - initialCameraPosition.y) * progress;
+    camera.position.z = initialCameraPosition.z + (targetCameraPosition.z - initialCameraPosition.z) * progress;
+    camera.position.x = initialCameraPosition.x + (targetCameraPosition.x - initialCameraPosition.x) * progress;
+    camera.lookAt(0, 2, 0); // Look at the center of the scene
+
+    if (progress < 1) {
+        requestAnimationFrame(animateCamera); // Continue animation until it's done
+    }
+    };
+
+    // Start the camera animation
+    animateCamera();
 
     // update camera position
     /////////////////////////////////////////////////////////

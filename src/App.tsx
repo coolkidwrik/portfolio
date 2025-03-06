@@ -15,7 +15,16 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <canvas id="threejscanvas" ref={canvasRef} />
+        {/* Container for the canvas */}
+        <div className="canvas-container">
+          <canvas id="threejscanvas" ref={canvasRef} />
+          
+          {/* Overlay text */}
+          <div className="absolute top-[42%] left-[8%] text-white">
+            <h1 className='text-[5rem]'>Wrik Steven Sen</h1>
+            <h3 className='text-[2rem]'>Software Engineer</h3>
+          </div>
+        </div>
         <div className="content">
           <h1>Welcome to the Section Below the Canvas</h1>
           <p>This is some content below the Three.js canvas. You can scroll down to see more.</p>
