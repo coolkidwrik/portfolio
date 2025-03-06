@@ -6,6 +6,6 @@
   ],
   "compilerOptions": {
     "moduleResolution": "node",
-    "esModuleInterop": true,
+    "esModuleInterop": true
   }
 }
