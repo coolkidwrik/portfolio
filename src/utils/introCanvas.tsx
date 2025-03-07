@@ -214,7 +214,9 @@ export const introCanvas = (canvasRef: React.RefObject<HTMLCanvasElement | null>
         const normalizedScroll = Math.min(scrollY / maxScroll, 1); // Normalize to [0,1]
         
         camera.position.y = 2 - normalizedScroll * 25; // Move y from 2 to 0
-        camera.position.z = 9.5 - normalizedScroll * 30; // Move y from 2 to 0
+        camera.position.z = 9.5 - normalizedScroll * 30; // Move z from 9.5 to 0
+        camera.position.x = 0 - normalizedScroll * 40; // Move x from 0 to -12
+        camera.lookAt(0, 2, 0); // Look at the center of the scene
 
         if (camera.position.y <= 0) {
             document.body.style.overflow = 'auto'; // Enable normal scrolling

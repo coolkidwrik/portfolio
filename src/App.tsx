@@ -7,8 +7,19 @@ import { introCanvas } from './utils/introCanvas';
 function App() {
   const canvasRef = useRef(null);
   const [showText, setShowText] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // Track scroll position to trigger transition
+  const handleScroll = () => {
+    if (window.scrollY > 100) { // Trigger when user scrolls past 100px
+      setIsScrolled(true);
+    } else {
+      setIsScrolled(false);
+    }
+  };
 
   useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
     const cleanup = introCanvas(canvasRef);
     
     // Trigger text to show after 2 seconds
@@ -17,6 +28,7 @@ function App() {
     }, 2000);
 
     return () => {
+      window.removeEventListener('scroll', handleScroll);
       if (typeof cleanup === 'function') {
         cleanup(); // Call cleanup if it's a function. Cleanup Three.js resources on unmount
       }
@@ -39,7 +51,7 @@ function App() {
             </div>
           </div>
         </div>
-        <div className="content">
+        <div className={`content ${isScrolled ? 'transitioned' : ''}, pb-20`}>
           <h1>Welcome to the Section Below the Canvas</h1>
           <p>This is some content below the Three.js canvas. You can scroll down to see more.</p>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam scelerisque ipsum vitae lacus tincidunt, vel tincidunt nisi tincidunt.</p>
