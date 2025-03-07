@@ -11,7 +11,7 @@ function App() {
 
   // Track scroll position to trigger transition
   const handleScroll = () => {
-    if (window.scrollY > 100) { // Trigger when user scrolls past 100px
+    if (window.scrollY > 150) { // Trigger when user scrolls past 100px
       setIsScrolled(true);
     } else {
       setIsScrolled(false);
@@ -48,6 +48,8 @@ function App() {
             <div className={`animated-text ${showText ? 'show' : ''}`}>
               <h1 className='text-[5rem]'>Wrik Steven Sen</h1>
               <h3 className='text-[2rem]'>Software Engineer</h3>
+              {/* place profile picture here when isScrolled */}
+              <img src="https://avatars.githubusercontent.com/u/60370017?v=4" alt="Wrik Steven Sen" className={`profile-picture ${isScrolled ? 'show' : ''}`} />
             </div>
           </div>
         </div>

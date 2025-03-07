@@ -49,6 +49,19 @@
   transform: translateY(0); /* Move into view */
 }
 
+.profile-picture {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  margin: 20px;
+  opacity: 0; /* Initially hidden */
+  transition: opacity 1s ease; /* Smooth fade in */
+}
+
+.profile-picture.show {
+  opacity: 1; /* Fade in */
+}
+
 /* Initial background gradient of the content section */
 .content {
   background: linear-gradient(0deg, #000726 0%, black 100%);
