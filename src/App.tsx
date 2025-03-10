@@ -45,24 +45,22 @@ function App() {
           <canvas id="threejscanvas" ref={canvasRef} />
           
           {/* Overlay text */}
-            <div className="absolute top-[42%] left-[8%] text-white">
+            <div className="absolute top-[42%] left-[8%] text-white flex flex-col items-center">
               <div className={`animated-text ${showText ? 'show' : ''} flex flex-col items-center`}>
-                <h1 className='text-[5rem]'>Wrik Steven Sen</h1>
-                <h3 className='text-[2rem]'>Software Engineer</h3>
-                <div className="flex justify-center">
-                  <img src="/profile_pic.jpg" alt="Wrik Steven Sen" className={`profile-picture ${isScrolled ? 'show' : ''}`} />
-                </div>
+              <h1 className='text-[5rem]'>Wrik Steven Sen</h1>
+              <h3 className='text-[2rem]'>Software Engineer</h3>
+              <div className="flex justify-center">
+                <img src="/profile_pic.jpg" alt="Wrik Steven Sen" className={`profile-picture ${isScrolled ? 'show' : ''}`} />
+              </div>
               </div>
             </div>
         </div>
-        <div className={`content ${isScrolled ? 'transitioned' : ''}, pb-20`}>
+        <div className={`content ${isScrolled ? 'transitioned' : ''} p-12 md:pt-30 md:pb-30 lg:pt-40 lg:pb-20`}>
           <h1>Welcome to the Section Below the Canvas</h1>
           <p>This is some content below the Three.js canvas. You can scroll down to see more.</p>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam scelerisque ipsum vitae lacus tincidunt, vel tincidunt nisi tincidunt.</p>
           <p>More content here...</p>
-          <div className="flex justify-center items-center bg-gray-900" style={{ width: '4rem', height: '4rem' }}>
-            <OrbButton onClick={() => alert("Orb clicked!")} />
-          </div>
+          <OrbButton onClick={() => alert("Orb clicked!")} />
         </div>
       </BrowserRouter>
     </div>
