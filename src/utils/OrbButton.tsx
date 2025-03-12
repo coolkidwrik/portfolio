@@ -34,7 +34,7 @@ useEffect(() => {
     // const light = new THREE.PointLight(0xffffff, 1);
     // light.position.set(2, 2, 5);
     // scene.add(light);
-    const light = new THREE.Vector3(0, 0, 5);
+    const light = new THREE.Vector3(0, 0, 10);
 
 
     // Orb shape and material
@@ -69,24 +69,19 @@ useEffect(() => {
     scene.add(orb);
 
     // Track light position based on cursor and scroll
-    const updateLightPosition = (event?: MouseEvent) => {
-        const scrollFactor = window.scrollY / window.innerHeight;
-        let x = 0, y = 0;
-
-        if (event) {
-            x = (event.clientX / window.innerWidth) * 2 - 1;
-            y = -(event.clientY / window.innerHeight) * 2 + 1;
-        }
-
-        toonMaterial.uniforms.lightPosition.value.set(x * 2, y * 2 - scrollFactor * 2, 5);
-        // light.set(x * 2, y * 2 - scrollFactor * 2, 5);
+    const updateLightPosition = () => {
+        const scrollFactor =  window.scrollY / window.innerHeight;
+    
+        // Adjust the light position based on scroll
+        const x = 0.5; // Fixed X position
+        const y = 5 - scrollFactor * 6; // Adjust Y based on scroll
+    
+        toonMaterial.uniforms.lightPosition.value.set(x * 5, y, 5);
         toonMaterial.needsUpdate = true;
-        // console.log(light);
-        // console.log("uniform: ->>>", toonMaterial.uniforms.lightPosition.value.x);
     };
 
     // Attach event listeners
-    window.addEventListener("mousemove", updateLightPosition);
+    // window.addEventListener("mousemove", updateLightPosition);
     window.addEventListener("scroll", () => updateLightPosition());
 
 
@@ -99,7 +94,7 @@ useEffect(() => {
 
     return () => {
         // Cleanup Three.js resources on unmount
-        window.removeEventListener("mousemove", updateLightPosition);
+        // window.removeEventListener("mousemove", updateLightPosition);
         window.removeEventListener("scroll", () => updateLightPosition());
         renderer.dispose();
     };
