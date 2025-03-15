@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 
 const pageVariants = {
-  initial: { opacity: 1, scale: 1 },
-  exit: { opacity: 0, scale: 0.95 },
-  enter: { opacity: 0, scale: 1 },
-  final: { opacity: 1, scale: 1 }
+  initial: { opacity: 1, y: 0 },  // Normal position
+  exit: { opacity: 0, y: -100, backgroundColor: "black" }, // Move up while fading to black
+  enter: { opacity: 0, y: -50, backgroundColor: "black"}, // Start below before appearing
+  final: { opacity: 1, y: 0 }
 };
 
 const PageTransition = ({ children }: { children: React.ReactNode }) => {
