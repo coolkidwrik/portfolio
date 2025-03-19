@@ -34,7 +34,7 @@ useEffect(() => {
     // const light = new THREE.PointLight(0xffffff, 1);
     // light.position.set(2, 2, 5);
     // scene.add(light);
-    const light = new THREE.Vector3(0, 0, 10);
+    const light = new THREE.Vector3(0, 0, 15);
 
 
     // Orb shape and material
@@ -45,8 +45,8 @@ useEffect(() => {
     // define geometry
     ////////////////////////////////////////////////////////
     // TOON
-    const toonColor = { type: 'c', value: new THREE.Color(1.0, 0.8, 0.4) };
-    const toonColor2 = { type: 'c', value: new THREE.Color(0.85, 0.07, 0.0) };
+    const toonColor = { type: 'c', value: new THREE.Color(0.09, 1.0, 0.62) }; // bright part
+    const toonColor2 = { type: 'c', value: new THREE.Color(0.09, 0.5, 1.0) }; // dark part
     const outlineColor = { type: 'c', value: new THREE.Color(0.0, 0.14, 0.03) };
 
     const toonMaterial = new THREE.ShaderMaterial({
