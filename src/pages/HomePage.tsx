@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { introCanvas } from '../utils/introCanvas';
 import OrbButton  from '../utils/OrbButton';
 import PageTransition from "../utils/pageTransition";
+import Footer from "../utils/footer";
 
 function HomePage() {
     const canvasRef = useRef(null);
@@ -60,6 +61,7 @@ function HomePage() {
             <OrbButton onClick={() => alert("Orb clicked!")} />
             <OrbButton onClick={() => alert("Orb clicked!")} />
           </div>
+          <Footer />
         </div>
       </PageTransition>
     );
