@@ -72,6 +72,19 @@
   color: white;
 }
 
+.page-content {
+  background: linear-gradient(0deg, #000726 0%, black 100%);
+  transition: background 2s ease-in-out; /* Smooth transition for the background gradient */
+  color: white;
+  min-height: 100vh; /* Ensures the section takes up the full screen height */
+  min-width: 100vw; /* Ensures the section takes up the full screen width */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center; /* Centers content horizontally */
+  text-align: center;
+}
+
 /* Add a class to transition the gradient */
 .content.transitioned {
   background: linear-gradient(0deg, #000726 0%, black 80%, black 100%);
@@ -83,7 +96,9 @@
   align-items: center;
   background: linear-gradient(0deg, #03605a 0%, #000726 80%, #000726 100%);;
   color: white;
-  padding: 20px 40px;
+  /* padding: 20px 40px; */
+  padding-top: 5%;
+  padding-bottom: 1%;
   position: relative;
   bottom: 0;
   width: 100%;
