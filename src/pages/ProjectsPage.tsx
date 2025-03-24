@@ -6,7 +6,7 @@ const ExperiencesPage = () => {
   return (
     <PageTransition>
       <div className="Projects page-content">
-          <h1>Projects</h1>
+          <h1 className="title">Projects</h1>
           <p>Under Construction</p>
           <Link to="/">Go Back to Home</Link>
       </div>

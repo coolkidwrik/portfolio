@@ -18,6 +18,17 @@
   display: block;
   /* flex-direction: column;
   align-items: center;  */
+  padding-bottom: 3%;
+}
+
+.title {
+  font-size: 4rem;
+  color: white;
+}
+
+.subtitle {
+  font-size: 2rem;
+  color: white;
 }
 
 #threejscanvas {
@@ -49,8 +60,39 @@
 }
 
 .animated-text.show {
-  opacity: 0.8; /* Fade in */
+  opacity: 1.0; /* Fade in */
   transform: translateY(0); /* Move into view */
+}
+
+/* Container for the About Me text */
+.about-me-container {
+  position: absolute;
+  top: 45%;
+  right: 10%; /* Position it on the right side */
+  max-width: 45vw; /* Prevents text from being too wide */
+  color: white;
+  text-align: left;
+  opacity: 0;
+  transform: translateX(50px); /* Start off-screen */
+  transition: opacity 1.5s ease, transform 1.5s ease;
+}
+
+/* Show animation */
+.about-me-container.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Styling for the text */
+.heading {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.content-text {
+  font-size: 1.1rem;
+  line-height: 1.5;
 }
 
 .profile-picture {
