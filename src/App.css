@@ -123,8 +123,8 @@
   display: flex;
   flex-direction: column;
   justify-content: center; 
-  align-items: center; /* Centers content horizontally */
-  text-align: center;
+  align-items: left;
+  text-align: left;
 }
 
 /* Add a class to transition the gradient */
