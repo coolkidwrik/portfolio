@@ -4,6 +4,7 @@ import { introCanvas } from '../utils/introCanvas';
 import OrbButton  from '../utils/OrbButton';
 import PageTransition from "../utils/pageTransition";
 import Footer from "../utils/footer";
+import Header from "../utils/header";
 
 function HomePage() {
     const canvasRef = useRef(null);
@@ -38,6 +39,7 @@ function HomePage() {
           {/* Container for the canvas */}
           <div className="canvas-container">
             <canvas id="threejscanvas" ref={canvasRef} />
+            <Header />
             
             {/* Overlay text */}
               <div className="absolute top-[35%] left-[12%] text-white flex flex-col items-center">

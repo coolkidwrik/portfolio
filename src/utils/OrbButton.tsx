@@ -9,8 +9,14 @@ import toonVS from '../utils/glsl/Toon/toon.vs.glsl?raw';
 import toonFS from '../utils/glsl/Toon/toon.fs.glsl?raw';
 /////////////////////////////////////////////////////////
 
+interface OrbButtonProps {
+  onClick?: () => void;
+  lightX?: number;
+  lightZ?: number;
+}
 
-const OrbButton: React.FC<{ onClick?: () => void }> = ({ onClick }) => {
+
+const OrbButton: React.FC<OrbButtonProps> = ({ onClick, lightX = 2.5, lightZ = 4 }) => {
 const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
 useEffect(() => {
@@ -46,7 +52,8 @@ useEffect(() => {
     ////////////////////////////////////////////////////////
     // TOON
     const toonColor = { type: 'c', value: new THREE.Color(0.09, 1.0, 0.62) }; // bright part
-    const toonColor2 = { type: 'c', value: new THREE.Color(0.09, 0.5, 1.0) }; // dark part
+    const toonColor2 = { type: 'c', value: new THREE.Color(0.07, 0.2, 0.6) }; // dark part
+    // const toonColor2 = { type: 'c', value: new THREE.Color(0.0, 0.03, 0.2) }; // dark part 
     const outlineColor = { type: 'c', value: new THREE.Color(0.0, 0.14, 0.03) };
 
     const toonMaterial = new THREE.ShaderMaterial({
@@ -73,10 +80,9 @@ useEffect(() => {
         const scrollFactor =  window.scrollY / window.innerHeight;
     
         // Adjust the light position based on scroll
-        const x = 0.5; // Fixed X position
         const y = 5 - scrollFactor * 6; // Adjust Y based on scroll
     
-        toonMaterial.uniforms.lightPosition.value.set(x * 5, y, 5);
+        toonMaterial.uniforms.lightPosition.value.set(lightX, y, lightZ);
         toonMaterial.needsUpdate = true;
     };
 
