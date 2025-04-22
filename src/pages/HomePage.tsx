@@ -73,9 +73,6 @@ function HomePage() {
               <p className="content-text pl-4"> Click here to see my experiences</p>
             </div>
             <OrbButton onClick={() => navigate("/Projects")} />
-            <OrbButton onClick={() => alert("Orb clicked!")} />
-            <OrbButton onClick={() => alert("Orb clicked!")} />
-            <OrbButton onClick={() => alert("Orb clicked!")} />
           </div>
           <Footer />
         </div>

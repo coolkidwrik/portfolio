@@ -8,10 +8,6 @@ const ProjectsPage = () => {
 
   // Project Descriptions
   /////////////////////////////////////////////////////////////////////////////////////
-  const Description = `
-    under construction
-  `;
-
   // Shell Description
   const ShellDescription = `
     This repository contains various projects coded using ZSH that can be run and implemented into the UNIX command line. Here are some notable projects:

@@ -22,18 +22,18 @@ const ExperiencesPage = () => {
     "Successfully migrated critical system logic to new embedded hardware, ensuring backward compatibility while improving system stability and performance for seamless operations.",
     "Developed and maintained advanced features for Applicata's portal using React and Next.js, collaborating closely with middleware teams to deliver scalable and efficient solutions.",
     "Designed and implemented interactive data visualizations and analytics dashboards with ApexCharts, empowering stakeholders with actionable insights and enhancing system monitoring capabilities.",
-   ]
+  ]
 
   const FYFDescription = `
-    under construction
+    Supported the academic and social transition of over 50 first-year students through peer mentorship, collaborative events, and skill-building workshops. Worked alongside three fellow mentors and a program coordinator to organize and facilitate initiatives focused on community building, academic success, and student well-being.
   `;
 
   const OFSTigersDescription = `
-    under construction
+    Led a competitive swim team of 100+ athletes in collaboration with the vice-captain and coaching staff. Took an active role in organizing and running training sessions, mentoring younger swimmers, and supporting overall team operations through instruction, motivation, and leadership.
   `;
 
   const QuantumPhysicsDescription = `
-    under construction
+    Co-led a student-run club focused on theoretical quantum physics, engaging over 20 students in weekly discussions, debates, and presentations. Planned and delivered sessions exploring advanced topics, encouraging curiosity-driven learning and critical thinking in a collaborative environment.
   `;
   /////////////////////////////////////////////////////////////////////////////////////
 
