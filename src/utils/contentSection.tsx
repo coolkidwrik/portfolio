@@ -11,7 +11,7 @@ interface ContentSectionProps {
 const ContentSection: React.FC<ContentSectionProps> = ({ heading, subtitle, description, list, date }) => {
   return (
     <div className="text-left pt-[5%] pr-[5%] text-white flex flex-col items-start">
-      <div className="w-full flex justify-between items-center">
+      <div className="flex items-center space-x-3">
         <h2 className="heading underline whitespace-nowrap">{heading}</h2>
         {date && (
           <span className="text-sm text-gray-300 ml-4">{date}</span>
