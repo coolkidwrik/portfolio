@@ -4,7 +4,10 @@ import Header from "../utils/header";
 import Footer from "../utils/footer";
 import ContentSection from "../utils/contentSection";
 
-const ExperiencesPage = () => {
+const ProjectsPage = () => {
+
+    // Experience Descriptions
+  /////////////////////////////////////////////////////////////////////////////////////
   const Description = `
     under construction
   `;
@@ -19,7 +22,7 @@ const ExperiencesPage = () => {
         <div className="flex flex-col items-start pt-[15%] pl-[10%] pr-[5%] text-white">
           <ContentSection
             heading="SHELL"
-            subtitle="zsh"
+            subtitle="ZSH"
             description={Description}
             date="2023"
           />
@@ -37,7 +40,7 @@ const ExperiencesPage = () => {
           />
           <ContentSection
             heading="Snake Game"
-            subtitle="rust"
+            subtitle="Rust"
             description={Description}
             date="2023"
           />
@@ -72,4 +75,4 @@ const ExperiencesPage = () => {
   );
 };
 
-export default ExperiencesPage;
+export default ProjectsPage;

@@ -4,10 +4,11 @@ interface ContentSectionProps {
     heading: string;
     subtitle: string;
     description: string;
+    list?: string[];
     date?: string;
 }
 
-const ContentSection: React.FC<ContentSectionProps> = ({ heading, subtitle, description, date }) => {
+const ContentSection: React.FC<ContentSectionProps> = ({ heading, subtitle, description, list, date }) => {
   return (
     <div className="text-left pt-[5%] pr-[5%] text-white flex flex-col items-start">
       <div className="w-full flex justify-between items-center">
@@ -18,6 +19,13 @@ const ContentSection: React.FC<ContentSectionProps> = ({ heading, subtitle, desc
       </div>
       <h3 className="underline text-lg">{subtitle}</h3>
       <p className="content-text">{description}</p>
+      {list && list.length > 0 && (
+        <ul className="list-disc pl-6 mt-2 space-y-1 text-gray-200">
+          {list.map((point, index) => (
+            <li key={index}>{point}</li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
