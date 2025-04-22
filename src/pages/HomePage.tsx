@@ -4,6 +4,7 @@ import { introCanvas } from '../utils/introCanvas';
 import OrbButton  from '../utils/OrbButton';
 import PageTransition from "../utils/pageTransition";
 import Footer from "../utils/footer";
+import Header from "../utils/header";
 
 function HomePage() {
     const canvasRef = useRef(null);
@@ -38,6 +39,7 @@ function HomePage() {
           {/* Container for the canvas */}
           <div className="canvas-container">
             <canvas id="threejscanvas" ref={canvasRef} />
+            <Header />
             
             {/* Overlay text */}
               <div className="absolute top-[35%] left-[12%] text-white flex flex-col items-center">
@@ -55,22 +57,22 @@ function HomePage() {
                 <p className="content-text">
                 Hey! I'm Wrik—welcome to my portfolio. I'm a fourth-year Computer Science major at the University of British Columbia and currently a software engineer at Aplicata Technologies. <br />
                 I've had the privilege of living in three different countries, meeting incredible people, and immersing myself in diverse cultures. Each experience has shaped who I am today, constantly fueling my curiosity and drive to learn. I thrive on challenges and see them as opportunities to grow, both personally and professionally. <br />
-                I’m passionate about creating and building—whether it's innovative software solutions, exciting side projects, or artistic expressions. With the world undergoing rapid digital transformation, I’m eager to contribute to meaningful advancements and push the boundaries of technology. <br />
-                Beyond tech, I love adventure, exploration, and stepping out of my comfort zone. Whether it's hiking new trails, picking up a new language, swimming, or strumming my guitar, I’m always looking for the next thing to discover. If there’s something new to learn, you’ll find me there, ready to dive in. <br />
-                Let’s connect and create something awesome!
+                I'm passionate about creating and building—whether it's innovative software solutions, exciting side projects, or artistic expressions. With the world undergoing rapid digital transformation, I'm eager to contribute to meaningful advancements and push the boundaries of technology. <br />
+                Beyond tech, I love adventure, exploration, and stepping out of my comfort zone. Whether it's hiking new trails, picking up a new language, swimming, or strumming my guitar, I'm always looking for the next thing to discover. If there's something new to learn, you'll find me there, ready to dive in. <br />
+                Let's connect and create something awesome!
                 </p>
               </div>
           </div>
 
           {/* Content below the canvas */}
           <div className={`content ${isScrolled ? 'transitioned' : ''} p-12 md:pt-30 md:pb-30 lg:pt-40 lg:pb-20`}>
-            <h1 className='heading'> Welcome to the Section Below the Canvas</h1>
-            <p className='content-text'>This is some content below the Three.js canvas. You can scroll down to see more.</p>
-            <OrbButton onClick={() => navigate("/Experiences")} />
+            <h1 className='heading'> More about me</h1>
+            <p className='content-text'>Click on the orbs to learn more about.</p>
+            <div className='flex items-center gap-4 p-10'>
+              <OrbButton onClick={() => navigate("/Experiences")} />
+              <p className="content-text pl-4"> Click here to see my experiences</p>
+            </div>
             <OrbButton onClick={() => navigate("/Projects")} />
-            <OrbButton onClick={() => alert("Orb clicked!")} />
-            <OrbButton onClick={() => alert("Orb clicked!")} />
-            <OrbButton onClick={() => alert("Orb clicked!")} />
           </div>
           <Footer />
         </div>
