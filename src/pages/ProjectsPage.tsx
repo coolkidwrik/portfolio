@@ -17,6 +17,7 @@ const ProjectsPage = () => {
     "diary: uses openssl to create and maintain a password encrypted document that can be accessed from anywhere on the machine.",
     "todo_list: A working todo list application with data persistence that runs on the command line. "
   ];
+  const ShellLink = "https://github.com/coolkidwrik/SHELL";
   
   // Shaders Description
   const ShadersDescription = `
@@ -26,6 +27,7 @@ const ProjectsPage = () => {
     "Developed classic shaders from scratch, like Phong/Blinn-Phong, Toon(Ceil) and created shaders of my own design(like diamond and static).",
     "Implemented PBR and IBL for a damaged helmet object.",
   ]
+  const ShadersLink = "https://github.com/coolkidwrik/Shaders";
 
   // Solar System Description
   const SolarSystemDescription = `
@@ -36,11 +38,13 @@ const ProjectsPage = () => {
     "Computed Physics for orbital mechanics used to enable orbit around the sun.",
     "Wrote shaders in GLSL to create atmospheric glow.",
   ]
+  const SolarSystemLink = "https://github.com/coolkidwrik/Solar_System";
 
   // Snake Game Description
   const SnakeGameDescription = `
     A snake game coded in Rust using the Piston game engine.
   `;
+  const SnakeGameLink = "https://github.com/coolkidwrik/Snake_Game-Rust-";
   
   // SNASA Description
   const SNASADescription = `
@@ -51,6 +55,7 @@ const ProjectsPage = () => {
     "Normalized Schemas using BCNF to reduce redundant data storage.",
     "Implemented frontend with HTML and JavaScript, and handled Backend SQL requests with PHP.",
   ]
+  const SNASALink = "https://github.com/coolkidwrik/SNASA";
 
   // Complex Number Calculator Description
   const ComplexNumberCalculatorDescription = `
@@ -62,6 +67,7 @@ const ProjectsPage = () => {
     "Utilized Python’s unit testing module to implement automated testing for each function.",
     "Used Python’s Tkinter module to create a calculator graphical user interface.",
   ]
+  const ComplexNumberCalculatorLink = "https://github.com/coolkidwrik/Complex-Numbers";
 
   // Swim Team Organizer Description
   const SwimTeamOrganizerDescription = `
@@ -74,6 +80,7 @@ const ProjectsPage = () => {
     "Calculates, and displays team statistics, dynamically rearrange members as statistics are changed.",
     "Used Junit for automated testing of modules for the program.",
   ]
+  const SwimTeamOrganizerLink = "https://github.com/coolkidwrik/CPSC-210-project/tree/main/project_t2f7p";
 
   // Coronary Heart Disease Prediction Model Description
   const CoronaryHeartDiseasePredictionModelDescription = `
@@ -84,6 +91,8 @@ const ProjectsPage = () => {
     "Trained model using the k-nearest neighbor classification. Used Cross-validation to tune value for k.",
     "The model was compared to testing data to determine the overall accuracy of the model in making predictions.",
   ]
+  const CoronaryHeartDiseasePredictionModelLink = "https://github.com/coolkidwrik/DSCI_project";
+  /////////////////////////////////////////////////////////////////////////////////////
 
 
   return (
@@ -100,6 +109,7 @@ const ProjectsPage = () => {
             description={ShellDescription}
             list={ShellList}
             date="2024"
+            link={ShellLink}
           />
           <ContentSection
             heading="Shaders"
@@ -107,6 +117,7 @@ const ProjectsPage = () => {
             description={ShadersDescription}
             list={ShadersList}
             date="2024"
+            link={ShadersLink}
           />
           <ContentSection
             heading="Solar System"
@@ -114,12 +125,14 @@ const ProjectsPage = () => {
             description={SolarSystemDescription}
             list={SolarSystemList}
             date="2024"
+            link={SolarSystemLink}
           />
           <ContentSection
             heading="Snake Game"
             subtitle="Rust"
             description={SnakeGameDescription}
             date="2023"
+            link={SnakeGameLink}
           />
           <ContentSection
             heading="SNASA"
@@ -127,6 +140,7 @@ const ProjectsPage = () => {
             description={SNASADescription}
             list={SNASADescriptionList}
             date="2023"
+            link={SNASALink}
           />
           <ContentSection
             heading="Complex Number Calculator"
@@ -134,6 +148,7 @@ const ProjectsPage = () => {
             description={ComplexNumberCalculatorDescription}
             list={ComplexNumberCalculatorList}
             date="2023"
+            link={ComplexNumberCalculatorLink}
           />
           <ContentSection
             heading="Swim Team Organizer"
@@ -141,6 +156,7 @@ const ProjectsPage = () => {
             description={SwimTeamOrganizerDescription}
             list={SwimTeamOrganizerList}
             date="2022"
+            link={SwimTeamOrganizerLink}
           />
           <ContentSection
             heading="Coronary Heart Disease Prediction Model"
@@ -148,6 +164,7 @@ const ProjectsPage = () => {
             description={CoronaryHeartDiseasePredictionModelDescription}
             list={CoronaryHeartDiseasePredictionModelList}
             date="2022"
+            link={CoronaryHeartDiseasePredictionModelLink}
           />
         </div>
       </div>

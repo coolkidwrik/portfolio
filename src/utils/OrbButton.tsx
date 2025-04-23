@@ -80,9 +80,10 @@ useEffect(() => {
         const scrollFactor =  window.scrollY / window.innerHeight;
     
         // Adjust the light position based on scroll
-        const y = 5 - scrollFactor * 6; // Adjust Y based on scroll
+        const y = 5 - scrollFactor * 10; // Adjust Y based on scroll
+        const x = lightX * (1 -  scrollFactor); // Adjust X based on scroll
     
-        toonMaterial.uniforms.lightPosition.value.set(lightX, y, lightZ);
+        toonMaterial.uniforms.lightPosition.value.set(x, y, lightZ);
         toonMaterial.needsUpdate = true;
     };
 
