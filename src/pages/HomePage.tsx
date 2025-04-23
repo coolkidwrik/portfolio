@@ -42,37 +42,42 @@ function HomePage() {
             <Header />
             
             {/* Overlay text */}
-              <div className="absolute top-[35%] left-[12%] text-white flex flex-col items-center">
-                <div className={`animated-text ${showText ? 'show' : ''} flex flex-col items-center`}>
-                  <h1 className='title'>Wrik Steven Sen</h1>
-                  <h3 className='subtitle'>Software Engineer</h3>
-                  <div className="flex justify-center">
-                    <img src="/profile_pic.jpg" alt="Wrik Steven Sen" className={`profile-picture ${isScrolled ? "show" : ""}`} />
-                  </div>
+            <div className="absolute top-[35%] left-[12%] text-white flex flex-col items-center">
+              <div className={`animated-text ${showText ? 'show' : ''} flex flex-col items-center`}>
+                <h1 className='title'>Wrik Steven Sen</h1>
+                <h3 className='subtitle'>Software Engineer</h3>
+                <div className="flex justify-center">
+                  <img src="/profile_pic.jpg" alt="Wrik Steven Sen" className={`profile-picture ${isScrolled ? "show" : ""}`} />
                 </div>
               </div>
-              {/* About Me Text on the Right */}
-              <div className={`about-me-container ${isScrolled ? "show" : ""}`}>
-                <h2 className="heading">About Me</h2>
-                <p className="content-text">
-                Hey! I'm Wrik—welcome to my portfolio. I'm a fourth-year Computer Science major at the University of British Columbia and currently a software engineer at Aplicata Technologies. <br />
-                I've had the privilege of living in three different countries, meeting incredible people, and immersing myself in diverse cultures. Each experience has shaped who I am today, constantly fueling my curiosity and drive to learn. I thrive on challenges and see them as opportunities to grow, both personally and professionally. <br />
-                I'm passionate about creating and building—whether it's innovative software solutions, exciting side projects, or artistic expressions. With the world undergoing rapid digital transformation, I'm eager to contribute to meaningful advancements and push the boundaries of technology. <br />
-                Beyond tech, I love adventure, exploration, and stepping out of my comfort zone. Whether it's hiking new trails, picking up a new language, swimming, or strumming my guitar, I'm always looking for the next thing to discover. If there's something new to learn, you'll find me there, ready to dive in. <br />
-                Let's connect and create something awesome!
-                </p>
-              </div>
+            </div>
+            {/* About Me Text on the Right */}
+            <div className={`about-me-container ${isScrolled ? "show" : ""}`}>
+              <h2 className="heading">About Me</h2>
+              <p className="content-text">
+              Hey! I'm Wrik—welcome to my portfolio. I'm a fourth-year Computer Science major at the University of British Columbia and currently a software engineer at Aplicata Technologies. <br />
+              I've had the privilege of living in three different countries, meeting incredible people, and immersing myself in diverse cultures. Each experience has shaped who I am today, constantly fueling my curiosity and drive to learn. I thrive on challenges and see them as opportunities to grow, both personally and professionally. <br />
+              I'm passionate about creating and building—whether it's innovative software solutions, exciting side projects, or artistic expressions. With the world undergoing rapid digital transformation, I'm eager to contribute to meaningful advancements and push the boundaries of technology. <br />
+              Beyond tech, I love adventure, exploration, and stepping out of my comfort zone. Whether it's hiking new trails, picking up a new language, swimming, or strumming my guitar, I'm always looking for the next thing to discover. If there's something new to learn, you'll find me there, ready to dive in. <br />
+              Let's connect and create something awesome!
+              </p>
+            </div>
           </div>
 
           {/* Content below the canvas */}
-          <div className={`content ${isScrolled ? 'transitioned' : ''} p-12 md:pt-30 md:pb-30 lg:pt-40 lg:pb-20`}>
+          <div className={`content ${isScrolled ? 'transitioned' : ''} p-12 md:pt-20 md:pb-30 lg:pt-30 lg:pb-20`}>
             <h1 className='heading'> More about me</h1>
             <p className='content-text'>Click on the orbs to learn more about.</p>
-            <div className='flex items-center gap-4 p-10'>
-              <OrbButton onClick={() => navigate("/Experiences")} />
-              <p className="content-text pl-4"> Click here to see my experiences</p>
+            <div className="w-full flex justify-evenly items-start p-10">
+              <div className="flex flex-col items-center text-center">
+                <OrbButton onClick={() => navigate("/Experiences")} />
+                <p className="heading mt-2 max-w-[200px]">Experiences</p>
+              </div>
+              <div className="flex flex-col items-center text-center">
+                <OrbButton onClick={() => navigate("/Projects")} lightX={-2.5}/>
+                <p className="heading mt-2 max-w-[200px]">Projects</p>
+              </div>
             </div>
-            <OrbButton onClick={() => navigate("/Projects")} />
           </div>
           <Footer />
         </div>
