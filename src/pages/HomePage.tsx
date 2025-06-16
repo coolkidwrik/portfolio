@@ -131,10 +131,10 @@ function HomePage() {
             <Header />
             
             {/* Overlay text */}
-            <div className="absolute top-[35%] left-[12%] text-white flex flex-col items-center">
+            <div className="absolute top-[45%] sm:top-[35%] left-[50%] sm:left-[12%] transform -translate-x-1/2 sm:translate-x-0 text-white flex flex-col items-center sm:items-start text-center sm:text-left px-4">
               <div className={`animated-text ${showText ? 'show' : ''} flex flex-col items-center`}>
-                <h1 className='title'>Wrik Steven Sen</h1>
-                <h3 className='subtitle'>Software Engineer</h3>
+                <h1 className='text-[2.25rem] sm:text-[2.75rem] md:text-[3.25rem] lg:text-[4rem] text-white'>Wrik Steven Sen</h1>
+                <h3 className='text-[1.125rem] sm:text-[1.375rem] md:text-[1.625rem] lg:text-[1.875rem] text-white mt-2'>Software Engineer</h3>
                 <div className="flex justify-center">
                   <img src="/profile_pic.jpg" alt="Wrik Steven Sen" className={`profile-picture ${isScrolled ? "show" : ""}`} />
                 </div>
