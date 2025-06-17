@@ -96,9 +96,6 @@
 }
 
 .profile-picture {
-  width: 25rem;
-  height: auto;
-  object-fit: cover;
   opacity: 0; /* Initially hidden */
   transition: opacity 1s ease; /* Smooth fade in */
 }
