@@ -111,7 +111,7 @@ useEffect(() => {
     <div
       onClick={onClick}
       className="relative flex items-center justify-center cursor-pointer"
-      style={{ width: '4rem', height: '4rem' }}
+      style={{ width: 'min(20vw, 5rem)', height: 'min(20vw, 5rem)' }}
     >
       <canvas ref={canvasRef} className="absolute" />
     </div>
