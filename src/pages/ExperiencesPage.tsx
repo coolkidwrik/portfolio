@@ -40,13 +40,13 @@ const ExperiencesPage = () => {
 
   return (
     <PageTransition>
-      <div className="Experiences page-content">
+      <div className="Experiences page-content overflow-x-hidden pb-20 sm:pb-25 lg:pb-25">
         <Header />
         <div className="absolute top-[20%] left-[8%] text-white flex flex-col items-center">
           <h1 className="title">Experiences</h1>
         </div>
         {/* content */}
-        <div className="flex flex-col items-start pt-[15%] pl-[10%] pr-[5%] text-white">
+        <div className="flex flex-col items-start pt-[35%] sm:pt-[15%] lg:pt-[15%] px-4 sm:px-[10%] w-full text-white">
           <ContentSection
             heading="Aplicata Technologies"
             subtitle="Software Engineer"

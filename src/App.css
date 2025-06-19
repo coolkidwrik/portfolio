@@ -116,12 +116,13 @@
   transition: background 2s ease-in-out; /* Smooth transition for the background gradient */
   color: white;
   min-height: 100vh; /* Ensures the section takes up the full screen height */
-  min-width: 100vw; /* Ensures the section takes up the full screen width */
+  min-width: 100%; /* Ensures the section takes up the full screen width */
   display: flex;
   flex-direction: column;
   justify-content: center; 
   align-items: left;
   text-align: left;
+  overflow-x: hidden;
 }
 
 /* Add a class to transition the gradient */

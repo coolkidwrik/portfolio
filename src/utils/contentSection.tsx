@@ -11,7 +11,7 @@ interface ContentSectionProps {
 
 const ContentSection: React.FC<ContentSectionProps> = ({ heading, subtitle, description, list, date, link }) => {
   return (
-    <div className="text-left pt-[5%] pr-[5%] text-white flex flex-col items-start">
+    <div className="text-left pt-[5%] px-4 sm:px-10 w-full max-w-full text-white flex flex-col items-start overflow-x-hidden break-words">
       <div className="flex items-center space-x-3">
         {link ? (
           <a href={link} target="_blank" rel="noopener noreferrer" className="text-inherit no-underline">
