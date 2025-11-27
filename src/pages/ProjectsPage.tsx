@@ -8,6 +8,18 @@ const ProjectsPage = () => {
 
   // Project Descriptions
   /////////////////////////////////////////////////////////////////////////////////////
+
+  // Thunderbird South Image Processing
+  const AstroDescription = `
+    Code to callibrate and process CCD data from UBC's Thunderbird South telescope. Developed as a workshop for the UBC Astronomy Club for students to learn about working with Telescope data.
+  `;
+  const AstroList = [
+    "Using astropy and ccdproc to combine and process dark, flat, and science frames",
+    "Filter noise from science frames using the processed noise data collected to remove hot pixels, vignetting, and dust noise",
+    "Stack data collected using different Johnson-Morgan system filters to create a color composite of the Lagoon Nebula"
+  ];
+  const AstroLink = "https://github.com/coolkidwrik/Thunderbird_South_Image_Processing";
+
   // Shell Description
   const ShellDescription = `
     This repository contains various projects coded using ZSH that can be run and implemented into the UNIX command line. Here are some notable projects:
@@ -64,8 +76,8 @@ const ProjectsPage = () => {
   const ComplexNumberCalculatorList = [
     "Using OOP concepts to create complex number class through inheritance.",
     "Derived and programed all complex definitions for mathematical functions from scratch.",
-    "Utilized Python’s unit testing module to implement automated testing for each function.",
-    "Used Python’s Tkinter module to create a calculator graphical user interface.",
+    "Utilized Python's unit testing module to implement automated testing for each function.",
+    "Used Python's Tkinter module to create a calculator graphical user interface.",
   ]
   const ComplexNumberCalculatorLink = "https://github.com/coolkidwrik/Complex-Numbers";
 
@@ -104,6 +116,14 @@ const ProjectsPage = () => {
         </div>
         <div className="flex flex-col items-start pt-[35%] sm:pt-[15%] lg:pt-[15%] px-4 sm:px-[10%] w-full text-white">
           <ContentSection
+            heading="Thunderbird South Image Processing"
+            subtitle="Python"
+            description={AstroDescription}
+            list={AstroList}
+            date="2025"
+            link={AstroLink}
+          />
+          <ContentSection
             heading="SHELL"
             subtitle="ZSH"
             description={ShellDescription}
@@ -118,6 +138,9 @@ const ProjectsPage = () => {
             list={ShadersList}
             date="2024"
             link={ShadersLink}
+            extra = {
+              <a href={"https://wrik-shaders-demo.vercel.app/"} target="_blank" rel="noopener noreferrer" className="text-inherit underline">Demo Here</a>
+            }
           />
           <ContentSection
             heading="Solar System"

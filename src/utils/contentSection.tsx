@@ -7,9 +7,10 @@ interface ContentSectionProps {
     list?: string[];
     date?: string;
     link?: string;
+    extra?: React.ReactNode;
 }
 
-const ContentSection: React.FC<ContentSectionProps> = ({ heading, subtitle, description, list, date, link }) => {
+const ContentSection: React.FC<ContentSectionProps> = ({ heading, subtitle, description, list, date, link, extra}) => {
   return (
     <div className="text-left pt-[5%] px-4 sm:px-10 w-full max-w-full text-white flex flex-col items-start overflow-x-hidden break-words">
       <div className="flex items-center space-x-3">
@@ -35,6 +36,8 @@ const ContentSection: React.FC<ContentSectionProps> = ({ heading, subtitle, desc
           ))}
         </ul>
       )}
+
+      {extra && <div className="content-text">{extra}</div>}
     </div>
   );
 };
