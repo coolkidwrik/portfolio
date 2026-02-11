@@ -10,6 +10,14 @@ const ExperiencesPage = () => {
 
   // Experience Descriptions
   /////////////////////////////////////////////////////////////////////////////////////
+  const pprcDescription = `App developer and research assistant at the Pacific Parkinson's Research Centre, contributing to the development of a desktop application for Parkinson's disease patients and assisting in research projects focused on patient data collection and analysis.`;
+  
+  const pprcDescriptionList = [
+    "Developing and improving modular apps that run in a desktop platform for monitoring and collecting Parkinson patients' statistics.",
+    "Enhancing existing apps by: Adding clear in-app instructions and simple media elements where needed; and improving layouts, navigation, and overall UI consistency.",
+    "Help test and debug core platform workflows, including: App installation/update; data saving, and analytic checks.",
+  ];
+
   const aplicataDescription = `
     Led the end-to-end development of cross-platform mobile and embedded software solutions at Applicata, contributing to both native and web platforms with a strong emphasis on performance, security, and user experience.
   `;
@@ -48,11 +56,18 @@ const ExperiencesPage = () => {
         {/* content */}
         <div className="flex flex-col items-start pt-[35%] sm:pt-[15%] lg:pt-[15%] px-4 sm:px-[10%] w-full text-white">
           <ContentSection
+            heading="Pacific Parkinson's Research Centre"
+            subtitle="Software Engineer"
+            description={pprcDescription}
+            list={pprcDescriptionList}
+            date="2026 - Present"
+          />
+          <ContentSection
             heading="Aplicata Technologies"
             subtitle="Software Engineer"
             description={aplicataDescription}
             list={aplicataDescriptionList}
-            date="2024 - Present"
+            date="2024 - 2025"
           />
           <ContentSection
             heading="First Year Focus "
