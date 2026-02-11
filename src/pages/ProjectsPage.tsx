@@ -8,6 +8,19 @@ const ProjectsPage = () => {
 
   // Project Descriptions
   /////////////////////////////////////////////////////////////////////////////////////
+  
+  // Travel Blog
+  const TravelBlogDescription = `Travel blog website to document my travels.`;
+  const TravelBlogList = [
+    "Developed Next.js React frontend with Typescript and used Sanity for backend headless-CMS.",
+    "Using Geo JSON data, Three.js and Three Fiber, developed 3D interactive globe-based page routing.",
+    "Optimized for SEO creating dynamic sitemaps and metadata.",
+    "Improved FCP by maximizing SSR for all page components where possible.",
+  ];
+  const TravelBlogLink = "https://github.com/coolkidwrik/Travel_Blog";
+  const TravelBlogExtra = (
+    <a href={"https://ckwrik-travel.vercel.app/"} target="_blank" rel="noopener noreferrer" className="text-inherit underline">Website Here</a>
+  );
 
   // Thunderbird South Image Processing
   const AstroDescription = `
@@ -40,6 +53,10 @@ const ProjectsPage = () => {
     "Implemented PBR and IBL for a damaged helmet object.",
   ]
   const ShadersLink = "https://github.com/coolkidwrik/Shaders";
+
+  const ShadersExtra = (
+    <a href={"https://wrik-shaders-demo.vercel.app/"} target="_blank" rel="noopener noreferrer" className="text-inherit underline">Demo Here</a>
+  );
 
   // Solar System Description
   const SolarSystemDescription = `
@@ -116,6 +133,15 @@ const ProjectsPage = () => {
         </div>
         <div className="flex flex-col items-start pt-[35%] sm:pt-[15%] lg:pt-[15%] px-4 sm:px-[10%] w-full text-white">
           <ContentSection
+            heading="Travel Blog"
+            subtitle="React, Typescript, Next.js, Sanity"
+            description={TravelBlogDescription}
+            list={TravelBlogList}
+            date="2026"
+            link={TravelBlogLink}
+            extra={TravelBlogExtra}
+          />
+          <ContentSection
             heading="Thunderbird South Image Processing"
             subtitle="Python"
             description={AstroDescription}
@@ -138,9 +164,7 @@ const ProjectsPage = () => {
             list={ShadersList}
             date="2024"
             link={ShadersLink}
-            extra = {
-              <a href={"https://wrik-shaders-demo.vercel.app/"} target="_blank" rel="noopener noreferrer" className="text-inherit underline">Demo Here</a>
-            }
+            extra = {ShadersExtra}
           />
           <ContentSection
             heading="Solar System"

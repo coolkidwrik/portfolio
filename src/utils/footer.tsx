@@ -13,7 +13,7 @@ const Footer = () => {
         <a href="https://www.linkedin.com/in/wrik-sen/" target="_blank" rel="noopener noreferrer" title="LinkedIn">
           <FaLinkedin className="text-2xl sm:text-3xl footer-social-icon" />
         </a>
-        <a href="https://drive.google.com/file/d/1_OxySm1I6iB7oaEEthehP60bWe8AbEZ0/view" target="_blank" rel="noopener noreferrer" title="Resume">
+        <a href="https://drive.google.com/file/d/10huifFZld-NGkmh1bWzFjz-8xespMCoC/view?usp=sharing" target="_blank" rel="noopener noreferrer" title="Resume">
           <FaFile className="text-2xl sm:text-3xl footer-social-icon" />
         </a>
       </div>
