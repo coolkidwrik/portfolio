@@ -21,6 +21,24 @@
   padding-bottom: 3%;
 }
 
+/* Mobile/tablet: ensure canvas container has proper height for overlay */
+@media (max-width: 767px) {
+  .canvas-container {
+    min-height: 100vh;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  /* Mobile about-me styling */
+  .about-me-mobile {
+    opacity: 0;
+    transition: opacity 1.5s ease;
+  }
+  .about-me-mobile.show {
+    opacity: 1;
+  }
+}
+
 .title {
   font-size: 4rem;
   color: white;
@@ -77,10 +95,59 @@
   transition: opacity 1.5s ease, transform 1.5s ease;
 }
 
+/* Mobile/tablet: switch to relative positioning so content stacks */
+@media (max-width: 767px) {
+  .about-me-container {
+    position: relative;
+    top: auto;
+    right: auto;
+    max-width: 100%;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    transform: none;
+  }
+  .about-me-container.show {
+    transform: none;
+  }
+}
+
 /* Show animation */
 .about-me-container.show {
   opacity: 1;
   transform: translateX(0);
+}
+
+/* Responsive About Me container: stacked at md, side-by-side at lg */
+.about-me-container-responsive {
+  position: relative;
+  max-width: 100%;
+  color: white;
+  text-align: center;
+  padding: 2rem 1.5rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1.5s ease, transform 1.5s ease;
+}
+
+.about-me-container-responsive.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* At lg (1024px+), switch to absolute side-by-side */
+@media (min-width: 1024px) {
+  .about-me-container-responsive {
+    position: absolute;
+    top: 45%;
+    right: 10%;
+    max-width: 45vw;
+    text-align: left;
+    padding: 0;
+    transform: translateX(50px);
+  }
+  .about-me-container-responsive.show {
+    transform: translateX(0);
+  }
 }
 
 /* Styling for the text */

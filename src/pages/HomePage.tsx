@@ -54,18 +54,26 @@ function HomePage() {
             <canvas id="threejscanvas" ref={canvasRef} />
             <Header />
             
-            {/* Overlay text */}
-            <div className="absolute top-[55%] sm:top-[35%] left-0 sm:left-[12%] w-full sm:w-auto transform sm:translate-x-0 text-white flex flex-col items-center sm:items-start text-center sm:text-left px-4">
+            {/* Mobile/tablet: only name overlay at bottom of canvas */}
+            <div className="md:hidden absolute inset-x-0 bottom-8 flex flex-col items-center text-center px-4">
+              <div className={`animated-text ${showText ? 'show' : ''} text-white`}>
+                <h1 className='text-[2rem] sm:text-[2.5rem]'>Wrik Steven Sen</h1>
+                <h3 className='text-[1.1rem] sm:text-[1.25rem] mt-1'>Software Engineer</h3>
+              </div>
+            </div>
+
+            {/* Desktop: stacked at md, side-by-side at lg */}
+            <div className="hidden md:flex lg:block lg:absolute lg:top-[35%] lg:left-[12%] flex-col items-center text-center lg:text-left lg:w-auto w-full px-4 lg:px-0 pt-8 lg:pt-0 text-white">
               <div className={`animated-text ${showText ? 'show' : ''} flex flex-col items-center`}>
-                <h1 className='text-[2.5rem] sm:text-[3rem] md:text-[3.5rem] lg:text-[4rem] flex text-white'>Wrik Steven Sen</h1>
-                <h3 className='text-[1.25rem] sm:text-[1.375rem] md:text-[1.625rem] lg:text-[1.875rem] text-white mt-2'>Software Engineer</h3>
-                <div className="flex justify-center sm:justify-start w-full mt-4 sm:mt-2">
-                  <img src="/profile_pic.jpg" alt="Wrik Steven Sen" className={`profile-picture ${isScrolled ? "show" : ""} w-[18rem] sm:w-[20rem] md:w-[22.5rem] lg:w-[25rem] h-auto object-cover`} />
+                <h1 className='text-[2.5rem] lg:text-[4rem] flex text-white'>Wrik Steven Sen</h1>
+                <h3 className='text-[1.5rem] lg:text-[1.875rem] text-white mt-2'>Software Engineer</h3>
+                <div className="flex justify-center lg:justify-start w-full mt-2">
+                  <img src="/profile_pic.jpg" alt="Wrik Steven Sen" className={`profile-picture ${isScrolled ? "show" : ""} w-[16rem] lg:w-[25rem] h-auto object-cover`} />
                 </div>
               </div>
             </div>
-            {/* About Me Text on the Right */}
-            <div className={`about-me-container ${isScrolled ? "show" : ""}`}>
+            {/* About Me Text (stacked at md, side-by-side at lg) */}
+            <div className={`about-me-container-responsive hidden md:block ${isScrolled ? "show" : ""}`}>
               <h2 className="heading">About Me</h2>
               <p className="content-text">
               Hey! I'm Wrik—welcome to my portfolio. I'm a fourth-year Computer Science major at the University of British Columbia and currently a software engineer at Aplicata Technologies. <br />
@@ -78,7 +86,19 @@ function HomePage() {
           </div>
 
           {/* Content below the canvas */}
-          <div className={`content ${isScrolled ? 'transitioned' : ''} p-12 md:pt-20 md:pb-30 lg:pt-30 lg:pb-20`}>
+          <div className={`content ${isScrolled ? 'transitioned' : ''} p-6 sm:p-8 md:p-12 md:pt-20 md:pb-30 lg:pt-30 lg:pb-20`}>
+            
+            {/* Mobile: image and about-me shown here */}
+            <div className="md:hidden flex flex-col items-center text-center mb-10">
+              <img src="/profile_pic.jpg" alt="Wrik Steven Sen" className="w-[16rem] sm:w-[18rem] h-auto object-cover rounded-lg mb-6" />
+              <h2 className="heading mb-3">About Me</h2>
+              <p className="content-text text-sm sm:text-base leading-relaxed max-w-2xl">
+                Hey! I'm Wrik—welcome to my portfolio. I'm a fourth-year Computer Science major at UBC and a software engineer at Aplicata Technologies.
+                I've lived in three countries, meeting incredible people and immersing myself in diverse cultures. I'm passionate about building innovative software and pushing the boundaries of technology.
+                Beyond tech, I love adventure—hiking, swimming, learning languages, and playing guitar. Let's connect!
+              </p>
+            </div>
+
             <h1 className='heading'> More about me</h1>
             <p className='content-text'>Click on the orbs to learn more about.</p>
             <div className="w-full flex justify-evenly items-start p-10">
