@@ -76,7 +76,7 @@ function HomePage() {
             <div className={`about-me-container-responsive hidden md:block ${isScrolled ? "show" : ""}`}>
               <h2 className="heading">About Me</h2>
               <p className="content-text">
-              Hey! I'm Wrik—welcome to my portfolio. I'm a fourth-year Computer Science major at the University of British Columbia and currently a software engineer at Aplicata Technologies. <br />
+              Hey! I'm Wrik—welcome to my portfolio. I'm a fifth-year Computer Science major at the University of British Columbia and currently a software engineer at the Pacific Parkinson's Research Centre <br />
               I've had the privilege of living in three different countries, meeting incredible people, and immersing myself in diverse cultures. Each experience has shaped who I am today, constantly fueling my curiosity and drive to learn. I thrive on challenges and see them as opportunities to grow, both personally and professionally. <br />
               I'm passionate about creating and building—whether it's innovative software solutions, exciting side projects, or artistic expressions. With the world undergoing rapid digital transformation, I'm eager to contribute to meaningful advancements and push the boundaries of technology. <br />
               Beyond tech, I love adventure, exploration, and stepping out of my comfort zone. Whether it's hiking new trails, picking up a new language, swimming, or strumming my guitar, I'm always looking for the next thing to discover. If there's something new to learn, you'll find me there, ready to dive in. <br />
@@ -112,7 +112,7 @@ function HomePage() {
               </div>
             </div>
             <div className="mt-20 w-full flex flex-col items-center">
-              <h2 className="heading mb-6 text-center">Find Me Elsewhere</h2>
+              <h2 className="heading mb-6 text-center">Check out my other sites!</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-5xl">
               {externalLinks.map((link, index) => (
                 <a

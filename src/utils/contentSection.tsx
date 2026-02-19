@@ -16,15 +16,15 @@ const ContentSection: React.FC<ContentSectionProps> = ({ heading, subtitle, desc
       <div className="flex items-center space-x-3">
         {link ? (
           <a href={link} target="_blank" rel="noopener noreferrer" className="text-inherit no-underline">
-            <h2 className="heading underline whitespace-nowrap hover:text-blue-400 transition-colors duration-200">
+            <h2 className="heading underline hover:text-blue-400 transition-colors duration-200">
               {heading}
             </h2>
           </a>
         ) : (
-          <h2 className="heading underline whitespace-nowrap">{heading}</h2>
+          <h2 className="heading underline">{heading}</h2>
         )}
         {date && (
-          <span className="text-sm text-gray-300 ml-4">{date}</span>
+          <span className="text-sm text-gray-300 ml-4 whitespace-nowrap">{date}</span>
         )}
       </div>
       <h3 className="underline text-lg">{subtitle}</h3>
