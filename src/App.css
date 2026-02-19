@@ -262,3 +262,22 @@
 .footer-gradient {
   background: linear-gradient(0deg, #03605a 0%, #000726 80%, #000726 100%);
 }
+
+/* Mobile-only: reduce footer sizes so elements don't dominate the viewport */
+@media (max-width: 639px) {
+  .footer-gradient {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+  .footer-contact {
+    font-size: 0.875rem;
+  }
+  .footer-social-icon {
+    font-size: 1.6rem !important;
+  }
+  footer.footer-gradient {
+    gap: 0.5rem;
+  }
+}
