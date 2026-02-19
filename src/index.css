@@ -87,3 +87,22 @@ button:focus-visible {
     transition-duration: 0.001ms !important;
   }
 }
+
+/* Prevent elements from causing horizontal overflow which can trigger mobile zooming */
+html, body, #root {
+  width: 100%;
+  overscroll-behavior-x: none;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Ensure media scales to container on small screens */
+img, video, iframe {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Hide accidental horizontal overflow */
+body {
+  overflow-x: hidden;
+}
