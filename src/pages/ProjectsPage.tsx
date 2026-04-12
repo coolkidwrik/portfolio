@@ -8,6 +8,20 @@ const ProjectsPage = () => {
 
   // Project Descriptions
   /////////////////////////////////////////////////////////////////////////////////////
+
+  // CMB isolation workshop
+  const CMBDescription = `
+    Code to simulate sky map data and isolate the Cosmic Microwave Background (CMB) signals from foreground emissions. Developed as a workshop for the UBC Astronomy Club for students to learn about CMB and component separation techniques.
+    `
+  
+  const CMBList = [
+    "Using Physics Models for dust, synchtron and CMB emissions, generated simulated sky map data at different frequencies.",
+    "Applied component separation techniques, in particular, Monte Carlo Markov Chain (MCMC) methods, to estimate best-fit parameters for generating foreground emission maps compared to the simulated data for one pixel.",
+    "Used the best-fit parameters to generate foreground emission maps for all pixels using linear algebra, and subtracted these from the simulated data to isolate the CMB signal.",
+    "Analyzed Markov Chain results to evaluate the effectiveness of the component separation and foreground removal process, and to understand the uncertainties in the estimated parameters and the resulting CMB maps."
+
+  ];
+  const CMBLink = "https://github.com/UBCAstronomyClub/CMB_Isolation";
   
   // Travel Blog
   const TravelBlogDescription = `Travel blog website to document my travels.`;
@@ -134,6 +148,14 @@ const ProjectsPage = () => {
           </div>
         </div>
         <div className="flex flex-col items-start pt-2 sm:pt-4 lg:pt-6 px-4 sm:px-[10%] w-full text-white">
+          <ContentSection
+            heading="CMB Isolation"
+            subtitle="Python"
+            description={CMBDescription}
+            list={CMBList}
+            date="2026"
+            link={CMBLink}
+          />
           <ContentSection
             heading="Travel Blog"
             subtitle="React, Typescript, Next.js, Sanity"
