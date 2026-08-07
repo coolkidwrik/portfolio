@@ -8,6 +8,21 @@ const ProjectsPage = () => {
 
   // Project Descriptions
   /////////////////////////////////////////////////////////////////////////////////////
+  // Spotify stats
+  const SpotifyDescription = `
+    A web application that uses the Spotify API to analyze a user's listening habits and provide insights into their music preferences. The application displays various statistics, including top artists, top tracks, and listening history.
+  `;
+
+  const SpotifyList = [
+    "Integrated the Spotify API to fetch user data and analyze listening habits.",
+    "Developed a user-friendly interface to display various music statistics.",
+  ];
+
+  const SpotifyLink = "https://github.com/coolkidwrik/Spotify_Stats";
+
+  const SpotifyExtra = (
+    <a href={"https://ckwrik-spotify-stats.vercel.app/"} target="_blank" rel="noopener noreferrer" className="text-inherit underline">Website Here</a>
+  );
 
   // CMB isolation workshop
   const CMBDescription = `
@@ -148,6 +163,15 @@ const ProjectsPage = () => {
           </div>
         </div>
         <div className="flex flex-col items-start pt-2 sm:pt-4 lg:pt-6 px-4 sm:px-[10%] w-full text-white">
+          <ContentSection
+            heading="Spotify Stats"
+            subtitle="React, Typescript, Next.js, Spotify API"
+            description={SpotifyDescription}
+            list={SpotifyList}
+            date="2026"
+            link={SpotifyLink}
+            extra={SpotifyExtra}
+          />
           <ContentSection
             heading="CMB Isolation"
             subtitle="Python"

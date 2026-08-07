@@ -9,12 +9,17 @@ import Header from "../utils/header";
 const externalLinks = [
   {
     title: "Travel Blog",
-    description: "Stories, photography, and experiences from around the world.",
+    description: "My stories, photography, and experiences from around the world.",
     url: "https://ckwrik-travel.vercel.app/"
   },
   {
+    title: "Spotify Statistics",
+    description: "Learn more about my spotify tastes and music preferences through this website",
+    url: "https://ckwrik-spotify-stats.vercel.app"
+  },
+  {
     title: "Computer Graphics Shaders Demo",
-    description: "Interactive web demo showcasing custom GLSL shaders built with Three.js.",
+    description: "Interactive web demo showcasing my custom GLSL shaders built with Three.js.",
     url: "https://wrik-shaders-demo.vercel.app/"
   },
 ];
