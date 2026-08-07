@@ -22,7 +22,10 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 px-4 sm:px-8 py-3 sm:py-4 flex justify-center sm:justify-end items-center bg-transparent text-white backdrop-blur-sm">
+    <header className="fixed top-0 left-0 w-full z-50 px-4 sm:px-8 py-3 sm:py-4 flex flex-col sm:flex-row justify-center sm:justify-end items-center bg-transparent text-white backdrop-blur-sm">
+        <span className="mb-2 sm:mb-0 sm:mr-auto text-lg sm:text-xl font-semibold tracking-tight whitespace-nowrap">
+          CKWrik&rsquo;s <span className="text-[#02a5c5]">Portfolio</span>
+        </span>
       <nav className="flex flex-wrap justify-center sm:justify-end gap-4 sm:gap-8 text-base sm:text-lg font-medium">
         <button
           onClick={handleAboutMeClick}
