@@ -16,6 +16,8 @@ const ExperiencesPage = () => {
     "Developing and improving modular apps that run in a desktop platform for monitoring and collecting Parkinson patients' statistics.",
     "Enhancing existing apps by: Adding clear in-app instructions and simple media elements where needed; and improving layouts, navigation, and overall UI consistency.",
     "Help test and debug core platform workflows, including: App installation/update; data saving, and analytic checks.",
+    "Collaborating with researchers to understand data needs and translate them into technical requirements for the application.",
+    "Developing AI agents to automate patient interaction and data collection, improving efficiency and accuracy of research processes.",
   ];
 
   const aplicataDescription = `

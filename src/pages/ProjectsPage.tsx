@@ -10,12 +10,13 @@ const ProjectsPage = () => {
   /////////////////////////////////////////////////////////////////////////////////////
   // Spotify stats
   const SpotifyDescription = `
-    A web application that uses the Spotify API to analyze a user's listening habits and provide insights into their music preferences. The application displays various statistics, including top artists, top tracks, and listening history.
+    A web application that uses the Spotify API to display statistics on my listening habits and provide insights into my music preferences. The application displays various statistics, including top artists, top tracks, and listening history.
   `;
 
   const SpotifyList = [
-    "Integrated the Spotify API to fetch user data and analyze listening habits.",
-    "Developed a user-friendly interface to display various music statistics.",
+    "Setup endpoints for cron job to collect data from Spotify API every hour.",
+    "Designed a relational database on supa base to store data from cron job.",
+    "Developed frontend to display data from Spotify API and Supa base to show current and comparative statistics.",
   ];
 
   const SpotifyLink = "https://github.com/coolkidwrik/Spotify_Stats";
