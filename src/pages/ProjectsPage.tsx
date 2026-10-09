@@ -166,7 +166,7 @@ const ProjectsPage = () => {
         <div className="flex flex-col items-start pt-2 sm:pt-4 lg:pt-6 px-4 sm:px-[10%] w-full text-white">
           <ContentSection
             heading="Spotify Stats"
-            subtitle="React, Typescript, Next.js, Spotify API"
+            subtitle="React, Typescript, Next.js, Supa base, Spotify API"
             description={SpotifyDescription}
             list={SpotifyList}
             date="2026"
