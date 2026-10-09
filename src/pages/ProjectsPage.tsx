@@ -15,7 +15,7 @@ const ProjectsPage = () => {
 
   const SpotifyList = [
     "Setup endpoints for cron job to collect data from Spotify API every hour.",
-    "Designed a relational database on supa base to store data from cronjob.",
+    "Designed a relational database on supa base to store data from cron job.",
     "Developed frontend to display data from Spotify API and Supa base to show current and comparative statistics.",
   ];
 
