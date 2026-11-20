@@ -8,29 +8,15 @@ const ProjectsPage = () => {
 
   // Project Descriptions
   /////////////////////////////////////////////////////////////////////////////////////
-  // exoplanet vetting workshop
-  const ExoplanetDescription = `
-    Code to vet exoplanet candidates from the TESS mission using the transit method. Developed as a workshop for the UBC Astronomy Club for students to learn about exoplanets, the transit method, and various vetting techniques.
-  `;
-
-  const ExoplanetList = [
-    "Workshop developed in collaboration with Dr. Michelle Kunimoto, creator of the LEO-Vetter planet-vetting library, who gave a talk on exoplanet detection and vetting to pair with the coding session.",
-    "Students download a TESS light curve from NASA's MAST archive and process it with lightkurve (cleaning, binning, flattening, Box Least Squares period search and phase folding), the same steps used in real transit surveys.",
-    "Wrote five simulated stars (a planet, two eclipsing binaries, a starspot variable and an instrumental glitch) with batman and NumPy. Students code four vetting tests (size, odd/even depth, secondary eclipse, background), each with tiered hints, then compare their verdicts with LEO-Vetter's."
-  ];
-
-  const ExoplanetLink = "`https://github.com/UBCAstronomyClub/Exoplanet_Vetting`";
-  
-  
   // Spotify stats
   const SpotifyDescription = `
     A web application that uses the Spotify API to display statistics on my listening habits and provide insights into my music preferences. The application displays various statistics, including top artists, top tracks, and listening history.
   `;
 
   const SpotifyList = [
-    "Setup endpoints for cron job to collect data from Spotify API every hour.",
-    "Designed a relational database on supa base to store data from cron job.",
-    "Developed frontend to display data from Spotify API and Supa base to show current and comparative statistics.",
+    "Set up endpoints for a cron job that collects data from the Spotify API every hour.",
+    "Designed a relational database on Supabase to store data from the cron job.",
+    "Developed the frontend to display data from the Spotify API and Supabase, showing current and comparative statistics.",
   ];
 
   const SpotifyLink = "https://github.com/coolkidwrik/Spotify_Stats";
@@ -45,8 +31,8 @@ const ProjectsPage = () => {
     `
   
   const CMBList = [
-    "Using Physics Models for dust, synchtron and CMB emissions, generated simulated sky map data at different frequencies.",
-    "Applied component separation techniques, in particular, Monte Carlo Markov Chain (MCMC) methods, to estimate best-fit parameters for generating foreground emission maps compared to the simulated data for one pixel.",
+    "Using physics models for dust, synchrotron and CMB emissions, generated simulated sky map data at different frequencies.",
+    "Applied component separation techniques, in particular, Markov Chain Monte Carlo (MCMC) methods, to estimate best-fit parameters for generating foreground emission maps compared to the simulated data for one pixel.",
     "Used the best-fit parameters to generate foreground emission maps for all pixels using linear algebra, and subtracted these from the simulated data to isolate the CMB signal.",
     "Analyzed Markov Chain results to evaluate the effectiveness of the component separation and foreground removal process, and to understand the uncertainties in the estimated parameters and the resulting CMB maps."
 
@@ -56,9 +42,9 @@ const ProjectsPage = () => {
   // Travel Blog
   const TravelBlogDescription = `Travel blog website to document my travels.`;
   const TravelBlogList = [
-    "Developed Next.js React frontend with Typescript and used Sanity for backend headless-CMS.",
-    "Using Geo JSON data, Three.js and Three Fiber, developed 3D interactive globe-based page routing.",
-    "Optimized for SEO creating dynamic sitemaps and metadata.",
+    "Developed a Next.js React frontend with TypeScript and used Sanity as a headless CMS backend.",
+    "Using GeoJSON data, Three.js and React Three Fiber, developed 3D interactive globe-based page routing.",
+    "Optimized for SEO by creating dynamic sitemaps and metadata.",
     "Improved FCP by maximizing SSR for all page components where possible.",
   ];
   const TravelBlogLink = "https://github.com/coolkidwrik/Travel_Blog";
@@ -68,12 +54,12 @@ const ProjectsPage = () => {
 
   // Thunderbird South Image Processing
   const AstroDescription = `
-    Code to callibrate and process CCD data from UBC's Thunderbird South telescope. Developed as a workshop for the UBC Astronomy Club for students to learn about working with Telescope data.
+    Code to calibrate and process CCD data from UBC's Thunderbird South telescope. Developed as a workshop for the UBC Astronomy Club for students to learn about working with telescope data.
   `;
   const AstroList = [
-    "Using astropy and ccdproc to combine and process dark, flat, and science frames",
-    "Filter noise from science frames using the processed noise data collected to remove hot pixels, vignetting, and dust noise",
-    "Stack data collected using different Johnson-Morgan system filters to create a color composite of the Lagoon Nebula"
+    "Used astropy and ccdproc to combine and process dark, flat, and science frames.",
+    "Filtered noise from science frames using the processed calibration data to remove hot pixels, vignetting, and dust noise.",
+    "Stacked data collected using different Johnson-Morgan system filters to create a color composite of the Lagoon Nebula."
   ];
   const AstroLink = "https://github.com/coolkidwrik/Thunderbird_South_Image_Processing";
 
@@ -84,7 +70,7 @@ const ProjectsPage = () => {
   const ShellList = [
     "bfc: A compiler for a popular esoteric programming language.",
     "diary: uses openssl to create and maintain a password encrypted document that can be accessed from anywhere on the machine.",
-    "todo_list: A working todo list application with data persistence that runs on the command line. "
+    "todo_list: A working to-do list application with data persistence that runs on the command line."
   ];
   const ShellLink = "https://github.com/coolkidwrik/SHELL";
   
@@ -93,7 +79,7 @@ const ProjectsPage = () => {
     A variety of shaders coded and applied in GLSL, run on the browser using THREE.js.  
   `;
   const ShadersList = [
-    "Developed classic shaders from scratch, like Phong/Blinn-Phong, Toon(Ceil) and created shaders of my own design(like diamond and static).",
+    "Developed classic shaders from scratch, like Phong/Blinn-Phong and toon (cel), and created shaders of my own design (like diamond and static).",
     "Implemented PBR and IBL for a damaged helmet object.",
   ]
   const ShadersLink = "https://github.com/coolkidwrik/Shaders";
@@ -108,7 +94,7 @@ const ProjectsPage = () => {
   `;
   const SolarSystemList = [
     "Utilized texture mapping and shadow mapping to create planets and lighting.",
-    "Computed Physics for orbital mechanics used to enable orbit around the sun.",
+    "Computed orbital mechanics to make the planets orbit the sun.",
     "Wrote shaders in GLSL to create atmospheric glow.",
   ]
   const SolarSystemLink = "https://github.com/coolkidwrik/Solar_System";
@@ -135,8 +121,8 @@ const ProjectsPage = () => {
     Software to perform mathematical operations on complex numbers (addition, multiplication, logarithms, exponentiation, trig, etc) and used numerical approximations for non-elementary functions (gamma, error, and zeta).
   `;
   const ComplexNumberCalculatorList = [
-    "Using OOP concepts to create complex number class through inheritance.",
-    "Derived and programed all complex definitions for mathematical functions from scratch.",
+    "Used OOP concepts to create a complex number class through inheritance.",
+    "Derived and programmed all complex definitions for mathematical functions from scratch.",
     "Utilized Python's unit testing module to implement automated testing for each function.",
     "Used Python's Tkinter module to create a calculator graphical user interface.",
   ]
@@ -147,11 +133,11 @@ const ProjectsPage = () => {
     Software to manage members of the team: add/remove members, manage captains, record swimmer statistics and swim styles. Developed to assist team coaches in management. Drawing inspiration from my old high school swim team.
   `;
   const SwimTeamOrganizerList = [
-    "Created both console-based and graphical user interfaces using java swing.",
-    "Using JSON objects and arrays to implement a save and load functionality for data persistence.",
+    "Created both console-based and graphical user interfaces using Java Swing.",
+    "Used JSON objects and arrays to implement save and load functionality for data persistence.",
     "Used comparison-based algorithms to recommend swim styles for members.",
-    "Calculates, and displays team statistics, dynamically rearrange members as statistics are changed.",
-    "Used Junit for automated testing of modules for the program.",
+    "Calculated and displayed team statistics, dynamically rearranging members as statistics change.",
+    "Used JUnit for automated testing of the program's modules.",
   ]
   const SwimTeamOrganizerLink = "https://github.com/coolkidwrik/CPSC-210-project/tree/main/project_t2f7p";
 
@@ -162,7 +148,7 @@ const ProjectsPage = () => {
   const CoronaryHeartDiseasePredictionModelList = [
     "Analyzed data for feature selection, identifying best characteristics that correlate to angiographic disease.",
     "Trained model using the k-nearest neighbor classification. Used Cross-validation to tune value for k.",
-    "The model was compared to testing data to determine the overall accuracy of the model in making predictions.",
+    "Evaluated the model against held-out test data to measure its overall prediction accuracy.",
   ]
   const CoronaryHeartDiseasePredictionModelLink = "https://github.com/coolkidwrik/DSCI_project";
   /////////////////////////////////////////////////////////////////////////////////////
@@ -179,16 +165,8 @@ const ProjectsPage = () => {
         </div>
         <div className="flex flex-col items-start pt-2 sm:pt-4 lg:pt-6 px-4 sm:px-[10%] w-full text-white">
           <ContentSection
-            heading="Exoplanet Vetting Workshop"
-            subtitle="Python"
-            description={ExoplanetDescription}
-            list={ExoplanetList}
-            date="2026"
-            link={ExoplanetLink}
-          />
-          <ContentSection
             heading="Spotify Stats"
-            subtitle="React, Typescript, Next.js, Supa base, Spotify API"
+            subtitle="React, TypeScript, Next.js, Spotify API"
             description={SpotifyDescription}
             list={SpotifyList}
             date="2026"
@@ -205,7 +183,7 @@ const ProjectsPage = () => {
           />
           <ContentSection
             heading="Travel Blog"
-            subtitle="React, Typescript, Next.js, Sanity"
+            subtitle="React, TypeScript, Next.js, Sanity"
             description={TravelBlogDescription}
             list={TravelBlogList}
             date="2026"

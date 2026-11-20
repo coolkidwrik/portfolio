@@ -17,14 +17,19 @@ interface OrbButtonProps {
 
 
 const OrbButton: React.FC<OrbButtonProps> = ({ onClick, lightX = 2.5, lightZ = 4 }) => {
-const canvasRef = useRef<HTMLCanvasElement | null>(null);
+const containerRef = useRef<HTMLDivElement | null>(null);
 
 useEffect(() => {
-    if (!canvasRef.current) return;
+    if (!containerRef.current) return;
+
+    // We create the <canvas> ourselves so it can be thrown away on unmount
+    // together with its WebGL context (see cleanup below).
+    const canvas = document.createElement("canvas");
+    canvas.className = "absolute";
+    containerRef.current.appendChild(canvas);
 
     // set up Three.js
     ////////////////////////////////////////////////////////
-    const canvas = canvasRef.current;
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
@@ -33,13 +38,7 @@ useEffect(() => {
     const size = 120; // Adjust the size of the orb
     renderer.setSize(size, size);
     camera.position.z = 1.5;
-    
-    
-    // Lighting for depth
-    // no need for actual light
-    // const light = new THREE.PointLight(0xffffff, 1);
-    // light.position.set(2, 2, 5);
-    // scene.add(light);
+
     const light = new THREE.Vector3(0, 0, 15);
 
 
@@ -48,20 +47,15 @@ useEffect(() => {
     ////////////////////////////////////////////////////////
     const geometry = new THREE.SphereGeometry(0.5, 32, 32);
 
-    // define geometry
+    // define material
     ////////////////////////////////////////////////////////
     // TOON
-    const toonColor = { type: 'c', value: new THREE.Color(0.09, 1.0, 0.62) }; // bright part
-    const toonColor2 = { type: 'c', value: new THREE.Color(0.07, 0.2, 0.6) }; // dark part
-    // const toonColor2 = { type: 'c', value: new THREE.Color(0.0, 0.03, 0.2) }; // dark part 
-    const outlineColor = { type: 'c', value: new THREE.Color(0.0, 0.14, 0.03) };
-
     const toonMaterial = new THREE.ShaderMaterial({
         uniforms: {
             lightPosition: { value: light },
-            toonColor: { value: toonColor.value },
-            toonColor2: { value: toonColor2.value },
-            outlineColor: { value: outlineColor.value },
+            toonColor: { value: new THREE.Color(0.09, 1.0, 0.62) },   // bright part
+            toonColor2: { value: new THREE.Color(0.07, 0.2, 0.6) },   // dark part
+            outlineColor: { value: new THREE.Color(0.0, 0.14, 0.03) },
             steps: { value: 5.0 }
         },
         vertexShader: toonVS,
@@ -71,50 +65,49 @@ useEffect(() => {
     // define Mesh
     ////////////////////////////////////////////////////////
     const orb = new THREE.Mesh(geometry, toonMaterial);
-
-    // Add orb to scene
     scene.add(orb);
 
-    // Track light position based on cursor and scroll
-    const updateLightPosition = () => {
-        const scrollFactor =  window.scrollY / window.innerHeight;
-    
-        // Adjust the light position based on scroll
-        const y = 5 - scrollFactor * 10; // Adjust Y based on scroll
-        const x = lightX * (1 -  scrollFactor); // Adjust X based on scroll
-    
+    // The orb never moves; only its light changes with scroll position.
+    // So instead of re-rendering 60 times a second forever, we render once
+    // per animation frame *only* when the user has scrolled.
+    let frameId: number | null = null;
+
+    const render = () => {
+        frameId = null;
+        const scrollFactor = window.scrollY / window.innerHeight;
+        const y = 5 - scrollFactor * 10;           // Adjust Y based on scroll
+        const x = lightX * (1 - scrollFactor);     // Adjust X based on scroll
         toonMaterial.uniforms.lightPosition.value.set(x, y, lightZ);
-        toonMaterial.needsUpdate = true;
-    };
-
-    // Attach event listeners
-    // window.addEventListener("mousemove", updateLightPosition);
-    window.addEventListener("scroll", () => updateLightPosition());
-
-
-    const update = () => {
-        requestAnimationFrame(update);
         renderer.render(scene, camera);
     };
 
-    update();
+    const handleScroll = () => {
+        if (frameId === null) frameId = requestAnimationFrame(render);
+    };
+
+    // Keep a reference to the *same* function so removeEventListener works.
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    render(); // initial frame, lit correctly for the current scroll position
 
     return () => {
         // Cleanup Three.js resources on unmount
-        // window.removeEventListener("mousemove", updateLightPosition);
-        window.removeEventListener("scroll", () => updateLightPosition());
+        window.removeEventListener("scroll", handleScroll);
+        if (frameId !== null) cancelAnimationFrame(frameId);
+        geometry.dispose();
+        toonMaterial.dispose();
         renderer.dispose();
+        renderer.forceContextLoss(); // release the WebGL context immediately
+        canvas.remove();
     };
-}, []);
+}, [lightX, lightZ]);
 
   return (
     <div
+      ref={containerRef}
       onClick={onClick}
       className="relative flex items-center justify-center cursor-pointer"
       style={{ width: 'min(20vw, 5rem)', height: 'min(20vw, 5rem)' }}
-    >
-      <canvas ref={canvasRef} className="absolute" />
-    </div>
+    />
   );
 };
 

@@ -1,4 +1,5 @@
 import { useNavigate, useLocation } from "react-router-dom";
+import { scrollToAboutMe } from "./scrollToAboutMe";
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
@@ -6,18 +7,11 @@ const Header: React.FC = () => {
 
   const handleAboutMeClick = () => {
     if (location.pathname === "/") {
-      const aboutMeSection = document.querySelector(".about-me-container");
-      if (aboutMeSection) {
-        aboutMeSection.scrollIntoView({ behavior: "smooth" });
-      }
+      scrollToAboutMe();
     } else {
-      navigate("/");
-      setTimeout(() => {
-        const aboutMeSection = document.querySelector(".about-me-container");
-        if (aboutMeSection) {
-          aboutMeSection.scrollIntoView({ behavior: "smooth" });
-        }
-      }, 2000);
+      // HomePage reads this state and scrolls once it has mounted,
+      // instead of guessing with a fixed timeout.
+      navigate("/", { state: { scrollToAboutMe: true } });
     }
   };
 

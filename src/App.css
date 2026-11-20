@@ -55,6 +55,19 @@
   display: block;
 }
 
+/* lg+: the canvas becomes a background layer behind the hero grid,
+   so the hero content is in normal flow and can grow taller than the screen. */
+@media (min-width: 1024px) {
+  #threejscanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .canvas-container {
+    background-color: black; /* matches the scene's dark bottom edge if the hero is taller than the canvas */
+  }
+}
+
 .overlay-text {
   position: absolute;
   top: 50%;
@@ -134,16 +147,12 @@
   transform: translateY(0);
 }
 
-/* At lg (1024px+), switch to absolute side-by-side */
+/* At lg (1024px+), it sits in the right-hand grid column (see HomePage.tsx) */
 @media (min-width: 1024px) {
   .about-me-container-responsive {
-    position: absolute;
-    top: 45%;
-    right: 10%;
-    max-width: 45vw;
     text-align: left;
     padding: 0;
-    transform: translateX(50px);
+    transform: translateX(50px); /* slide in from the right */
   }
   .about-me-container-responsive.show {
     transform: translateX(0);
