@@ -8,6 +8,20 @@ const ProjectsPage = () => {
 
   // Project Descriptions
   /////////////////////////////////////////////////////////////////////////////////////
+  // exoplanet vetting workshop
+  const ExoplanetDescription = `
+    Code to vet exoplanet candidates from the TESS mission using the transit method. Developed as a workshop for the UBC Astronomy Club for students to learn about exoplanets, the transit method, and various vetting techniques.
+  `;
+
+  const ExoplanetList = [
+    "Workshop developed in collaboration with Dr. Michelle Kunimoto, creator of the LEO-Vetter planet-vetting library, who gave a talk on exoplanet detection and vetting to pair with the coding session.",
+    "Students download a TESS light curve from NASA's MAST archive and process it with lightkurve (cleaning, binning, flattening, Box Least Squares period search and phase folding), the same steps used in real transit surveys.",
+    "Wrote five simulated stars (a planet, two eclipsing binaries, a starspot variable and an instrumental glitch) with batman and NumPy. Students code four vetting tests (size, odd/even depth, secondary eclipse, background), each with tiered hints, then compare their verdicts with LEO-Vetter's."
+  ];
+
+  const ExoplanetLink = "`https://github.com/UBCAstronomyClub/Exoplanet_Vetting`";
+  
+  
   // Spotify stats
   const SpotifyDescription = `
     A web application that uses the Spotify API to display statistics on my listening habits and provide insights into my music preferences. The application displays various statistics, including top artists, top tracks, and listening history.
@@ -164,6 +178,14 @@ const ProjectsPage = () => {
           </div>
         </div>
         <div className="flex flex-col items-start pt-2 sm:pt-4 lg:pt-6 px-4 sm:px-[10%] w-full text-white">
+          <ContentSection
+            heading="Exoplanet Vetting Workshop"
+            subtitle="Python"
+            description={ExoplanetDescription}
+            list={ExoplanetList}
+            date="2026"
+            link={ExoplanetLink}
+          />
           <ContentSection
             heading="Spotify Stats"
             subtitle="React, Typescript, Next.js, Supa base, Spotify API"
