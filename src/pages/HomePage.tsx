@@ -115,7 +115,8 @@ function HomePage() {
                             lg:grid-cols-[minmax(0,3fr)_minmax(0,4fr)] lg:gap-x-[4%] lg:gap-y-2
                             lg:pl-[12%] lg:pr-[10%] lg:pt-[35vh] lg:pb-16">
               {/* Row 1: name + title (spans both columns so the big name never wraps) */}
-              <div className={`animated-text ${showText ? 'show' : ''} lg:col-span-2 lg:text-left px-4 lg:px-0 pt-8 lg:pt-0`}>
+              {/* data-about-me: the header's "About Me" link scrolls here, so the name, photo and text are all in view */}
+              <div data-about-me className={`animated-text ${showText ? 'show' : ''} lg:col-span-2 lg:text-left px-4 lg:px-0 pt-8 lg:pt-0`}>
                 <div className="inline-flex flex-col items-center text-center">
                   <h1 className='text-[2.5rem] lg:text-[4rem] text-white'>Wrik Steven Sen</h1>
                   <h3 className='text-[1.5rem] lg:text-[1.875rem] text-white mt-2'>Software Engineer</h3>
@@ -130,7 +131,7 @@ function HomePage() {
               />
 
               {/* Row 2, right: About Me */}
-              <div data-about-me className={`about-me-container-responsive ${isScrolled ? "show" : ""}`}>
+              <div className={`about-me-container-responsive ${isScrolled ? "show" : ""}`}>
                 <h2 className="heading">About Me</h2>
                 {aboutMeParagraphs.map((text) => (
                   <p key={text} className="content-text">{text}</p>
