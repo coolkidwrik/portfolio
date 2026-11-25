@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 // import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
-function setup(canvas: HTMLCanvasElement) {
+function setup(canvas: HTMLCanvasElement, onResize?: (w: number, h: number) => void) {
     // Create a scene
     const w = window.innerWidth;
     const h = window.innerHeight;
@@ -29,18 +29,25 @@ function setup(canvas: HTMLCanvasElement) {
 
     // Handle window resize
     function handleWindowResize() {
-        let w = window.innerWidth;
-        let h = window.innerHeight;
+        const w = window.innerWidth;
+        const h = window.innerHeight;
         camera.aspect = w / h;
         camera.updateProjectionMatrix();
         renderer.setSize(w, h);
+        onResize?.(w, h); // let callers resize anything else (e.g. post-processing)
     }
     window.addEventListener('resize', handleWindowResize, false);
+
+    // Call this on unmount so the resize listener doesn't outlive the scene.
+    const dispose = () => {
+        window.removeEventListener('resize', handleWindowResize, false);
+    };
 
     return {
         renderer,
         scene,
-        camera
+        camera,
+        dispose
     };
 }
 

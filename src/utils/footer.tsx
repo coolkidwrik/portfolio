@@ -1,5 +1,6 @@
 import { FaGithub, FaLinkedin, FaFile } from "react-icons/fa";
 import { MdEmail, MdPhone } from "react-icons/md";
+import { RESUME_URL, GITHUB_URL, LINKEDIN_URL, EMAIL, PHONE_DISPLAY, PHONE_TEL } from "./links.ts";
 
 const Footer = () => {
   return (
@@ -7,24 +8,24 @@ const Footer = () => {
       
       {/* Icons */}
       <div className="flex gap-4 sm:gap-6">
-        <a href="https://github.com/coolkidwrik" target="_blank" rel="noopener noreferrer" title="GitHub">
+        <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" title="GitHub">
           <FaGithub className="text-2xl sm:text-3xl footer-social-icon" />
         </a>
-        <a href="https://www.linkedin.com/in/wrik-sen/" target="_blank" rel="noopener noreferrer" title="LinkedIn">
+        <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" title="LinkedIn">
           <FaLinkedin className="text-2xl sm:text-3xl footer-social-icon" />
         </a>
-        <a href="https://drive.google.com/file/d/10huifFZld-NGkmh1bWzFjz-8xespMCoC/view?usp=sharing" target="_blank" rel="noopener noreferrer" title="Resume">
+        <a href={RESUME_URL} target="_blank" rel="noopener noreferrer" title="Resume">
           <FaFile className="text-2xl sm:text-3xl footer-social-icon" />
         </a>
       </div>
 
       {/* Contact Info */}
       <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-6 text-center sm:text-left">
-        <a href="mailto:wriksen2003@gmail.com" className="flex items-center gap-2 hover:text-[#02a5c5] transition-colors footer-contact">
-          <MdEmail className="text-xl sm:text-2xl footer-social-icon" /> wriksen2003@gmail.com
+        <a href={`mailto:${EMAIL}`} className="flex items-center gap-2 hover:text-[#02a5c5] transition-colors footer-contact">
+          <MdEmail className="text-xl sm:text-2xl footer-social-icon" /> {EMAIL}
         </a>
-        <a href="tel:+16044172072" className="flex items-center gap-2 hover:text-[#02a5c5] transition-colors footer-contact">
-          <MdPhone className="text-xl sm:text-2xl footer-social-icon" /> +1 (604) 417-2072
+        <a href={`tel:${PHONE_TEL}`} className="flex items-center gap-2 hover:text-[#02a5c5] transition-colors footer-contact">
+          <MdPhone className="text-xl sm:text-2xl footer-social-icon" /> {PHONE_DISPLAY}
         </a>
       </div>
     </footer>

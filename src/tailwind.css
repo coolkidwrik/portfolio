@@ -1,0 +1,9 @@
+/*
+  Tailwind, compiled at build time (replaces the cdn.tailwindcss.com script).
+  This file is imported LAST in main.tsx on purpose: the CDN script used to
+  inject its styles after index.css / App.css, so keeping the same order
+  keeps the site looking exactly the same.
+*/
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

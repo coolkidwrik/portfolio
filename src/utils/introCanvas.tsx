@@ -29,10 +29,26 @@ import noiseFS from '../utils/glsl/Normal_Noise/noise.fs.glsl?raw';
 /////////////////////////////////////////////////////////
 
 
-export const introCanvas = (canvasRef: React.RefObject<HTMLCanvasElement | null>): (() => void) | void => {
-    if (!canvasRef.current) return;
+export const introCanvas = (hostRef: React.RefObject<HTMLElement | null>): (() => void) | void => {
+    if (!hostRef.current) return;
 
-    const { renderer, scene, camera } = setup(canvasRef.current);
+    // We create the <canvas> ourselves (instead of React rendering it) so that on
+    // unmount we can force the WebGL context to be released and throw the canvas
+    // away. A React-owned canvas gets reused, and a lost context can't be revived.
+    const canvas = document.createElement('canvas');
+    canvas.id = 'threejscanvas';
+    hostRef.current.appendChild(canvas);
+
+    // Set to false on unmount; every loop and async callback checks it.
+    let isMounted = true;
+    let frameId: number | null = null;
+
+    const { renderer, scene, camera, dispose: disposeSetup } = setup(canvas, (w, h) => {
+      // Keep the bloom post-processing in sync with the canvas size,
+      // otherwise the image goes blurry/stretched after a window resize.
+      composer.setSize(w, h);
+      bloomPass.resolution.set(w, h);
+    });
 
     // post processing
     const renderPass = new RenderPass(scene, camera);
@@ -54,6 +70,7 @@ export const introCanvas = (canvasRef: React.RefObject<HTMLCanvasElement | null>
     // Load background texture
     const loader = new THREE.TextureLoader();
     loader.load(bgimage, (texture) => {
+      if (!isMounted) { texture.dispose(); return; }
       texture.colorSpace = THREE.SRGBColorSpace; // Ensures correct color space
       scene.background = texture;
     }, undefined, (error) => {
@@ -72,6 +89,8 @@ export const introCanvas = (canvasRef: React.RefObject<HTMLCanvasElement | null>
     let anti_spiral: THREE.Group | undefined;
     let spaceman: THREE.Group | undefined;
     let benny: THREE.Group | undefined;
+    let spacemanMixer: THREE.AnimationMixer | undefined;
+    const clock = new THREE.Clock();
 
     {
       const gltfLoader = new GLTFLoader();
@@ -80,6 +99,7 @@ export const introCanvas = (canvasRef: React.RefObject<HTMLCanvasElement | null>
       gltfLoader.load(
         spaceBoi,
         (gltf) => {
+          if (!isMounted) return;
           anti_spiral = gltf.scene;
           scene.add(anti_spiral); // Add the loaded model to the scene
         },
@@ -92,25 +112,19 @@ export const introCanvas = (canvasRef: React.RefObject<HTMLCanvasElement | null>
       // load astronaut
       // Load astronaut
       gltfLoader.load(spaceMan, (gltf) => {
+        if (!isMounted) return;
         spaceman = gltf.scene;
         spaceman.scale.set(1, 1, 1);
         spaceman.position.set(2, 2, 7);
         spaceman.rotation.set(0.5, 1.7, 0);
         scene.add(spaceman);
 
-        const mixer = new THREE.AnimationMixer(spaceman);
+        // The mixer is advanced inside the main update() loop below,
+        // rather than in its own requestAnimationFrame loop that never stopped.
+        spacemanMixer = new THREE.AnimationMixer(spaceman);
         const clip = THREE.AnimationClip.findByName(gltf.animations, 'Idle');
-        const action = mixer.clipAction(clip);
-        action.play();
-
-        // Update mixer in the animation loop
-        const clock = new THREE.Clock();
-        const updateMixer = () => {
-        const delta = clock.getDelta();
-        mixer.update(delta);
-        requestAnimationFrame(updateMixer);
-        };
-        updateMixer();
+        spacemanMixer.clipAction(clip).play();
+        clock.getDelta(); // reset so the first frame doesn't jump
       }, undefined, (error) => {
         console.error('Error loading Spaceman GLB model:', error);
       });
@@ -119,6 +133,7 @@ export const introCanvas = (canvasRef: React.RefObject<HTMLCanvasElement | null>
       gltfLoader.load(
         legoMan,
         (gltf) => {
+          if (!isMounted) return;
           benny = gltf.scene;
           scene.add(benny); // Add the loaded model to the scene
           benny.scale.set(-0.018, 0.018, 0.018);
@@ -179,43 +194,60 @@ export const introCanvas = (canvasRef: React.RefObject<HTMLCanvasElement | null>
     scene.add(ball2);
 
 
-    // Move camera from initial position to target
+    // Camera position for a given scroll position
     /////////////////////////////////////////////////////////
-    let startTime = Date.now();
+    const introTargetPosition = { x: 0, y: 2.2, z: 9.5 }; // resting spot at the top of the page
+
+    const scrollCameraPosition = () => {
+        const maxScroll = window.innerHeight * 2; // Adjust the max scroll range
+        const normalizedScroll = Math.min(window.scrollY / maxScroll, 1); // Normalize to [0,1]
+        if (normalizedScroll === 0) return introTargetPosition;
+        return {
+            x: 0 - normalizedScroll * 40,  // Move x from 0 to -40
+            y: 2 - normalizedScroll * 25,  // Move y from 2 to -23
+            z: 9.5 - normalizedScroll * 30, // Move z from 9.5 to -20.5
+        };
+    };
+
+    // Intro: fly the camera in from its initial position over 2 seconds.
+    // It flies towards wherever the *current scroll position* says the camera
+    // should be (not a fixed point), so if the page scrolls during the intro
+    // (e.g. the header's "About Me" link), the camera ends up in the right place.
+    /////////////////////////////////////////////////////////
+    const startTime = Date.now();
     const initialCameraPosition = { ...camera.position }; // Store initial camera position
-    const targetCameraPosition = { x: 0, y: 2.2, z: 9.5 };   // Target position
     const duration = 2000;  // 2 seconds duration
+    let introDone = false;
 
     const animateCamera = () => {
+    if (!isMounted) return;
     const elapsed = Date.now() - startTime;
     const progress = Math.min(elapsed / duration, 1);  // Progress value between 0 and 1
+    const target = scrollCameraPosition();
 
     // Lerp (Linear Interpolate) the camera position
-    camera.position.y = initialCameraPosition.y + (targetCameraPosition.y - initialCameraPosition.y) * progress;
-    camera.position.z = initialCameraPosition.z + (targetCameraPosition.z - initialCameraPosition.z) * progress;
-    camera.position.x = initialCameraPosition.x + (targetCameraPosition.x - initialCameraPosition.x) * progress;
+    camera.position.y = initialCameraPosition.y + (target.y - initialCameraPosition.y) * progress;
+    camera.position.z = initialCameraPosition.z + (target.z - initialCameraPosition.z) * progress;
+    camera.position.x = initialCameraPosition.x + (target.x - initialCameraPosition.x) * progress;
     camera.lookAt(0, 2, 0); // Look at the center of the scene
 
     if (progress < 1) {
         requestAnimationFrame(animateCamera); // Continue animation until it's done
+    } else {
+        introDone = true;
     }
     };
 
     // Start the camera animation
     animateCamera();
 
-    // update camera position
+    // update camera position on scroll (after the intro has finished)
     /////////////////////////////////////////////////////////
     const updateCameraPosition = () => {
-        if (!isMounted) return;
-        
-        const scrollY = window.scrollY;
-        const maxScroll = window.innerHeight * 2; // Adjust the max scroll range
-        const normalizedScroll = Math.min(scrollY / maxScroll, 1); // Normalize to [0,1]
-        
-        camera.position.y = 2 - normalizedScroll * 25; // Move y from 2 to 0
-        camera.position.z = 9.5 - normalizedScroll * 30; // Move z from 9.5 to 0
-        camera.position.x = 0 - normalizedScroll * 40; // Move x from 0 to -12
+        if (!isMounted || !introDone) return; // during the intro, animateCamera handles scroll
+
+        const { x, y, z } = scrollCameraPosition();
+        camera.position.set(x, y, z);
         camera.lookAt(0, 2, 0); // Look at the center of the scene
 
         if (camera.position.y <= 0) {
@@ -223,11 +255,8 @@ export const introCanvas = (canvasRef: React.RefObject<HTMLCanvasElement | null>
         }
     };
 
-    window.addEventListener('scroll', updateCameraPosition);
+    window.addEventListener('scroll', updateCameraPosition, { passive: true });
 
-
-
-    let isMounted = true;
 
     // animate
     function update() {
@@ -235,6 +264,11 @@ export const introCanvas = (canvasRef: React.RefObject<HTMLCanvasElement | null>
 
       // update uniforms
       ticks.value += 0.01;
+
+      // advance the astronaut's idle animation
+      if (spacemanMixer) {
+        spacemanMixer.update(clock.getDelta());
+      }
 
       // rotate
       ball2.rotation.x += 0.001;
@@ -258,15 +292,36 @@ export const introCanvas = (canvasRef: React.RefObject<HTMLCanvasElement | null>
 
       // renderer.render(scene, camera);
       composer.render();
-      requestAnimationFrame(update);
+      frameId = requestAnimationFrame(update);
     }
   
     update();
   
     return () => {
-      isMounted = false; // Stop animation
-      renderer.dispose(); // Dispose of the WebGL context
+      isMounted = false; // Stop animation loops and ignore late-loading models
+      if (frameId !== null) cancelAnimationFrame(frameId);
       window.removeEventListener('scroll', updateCameraPosition);
-      window.removeEventListener('resize', () => {}); // Remove resize listener
+      disposeSetup(); // removes the resize listener added in setup()
+
+      spacemanMixer?.stopAllAction();
+
+      // Free GPU memory: geometries, materials and textures of everything in the scene
+      scene.traverse((obj) => {
+        if (obj instanceof THREE.Mesh) {
+          obj.geometry.dispose();
+          const materials = Array.isArray(obj.material) ? obj.material : [obj.material];
+          materials.forEach((m: THREE.Material) => {
+            Object.values(m).forEach((v) => { if (v instanceof THREE.Texture) v.dispose(); });
+            m.dispose();
+          });
+        }
+      });
+      if (scene.background instanceof THREE.Texture) scene.background.dispose();
+
+      bloomPass.dispose();
+      composer.dispose();
+      renderer.dispose();
+      renderer.forceContextLoss(); // actually release the WebGL context now, not "whenever GC runs"
+      canvas.remove();
     };
 }

@@ -1,4 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
+import { scrollToAboutMe } from "./scrollToAboutMe";
+import { RESUME_URL } from "./links";
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
@@ -6,27 +8,20 @@ const Header: React.FC = () => {
 
   const handleAboutMeClick = () => {
     if (location.pathname === "/") {
-      const aboutMeSection = document.querySelector(".about-me-container");
-      if (aboutMeSection) {
-        aboutMeSection.scrollIntoView({ behavior: "smooth" });
-      }
+      scrollToAboutMe();
     } else {
-      navigate("/");
-      setTimeout(() => {
-        const aboutMeSection = document.querySelector(".about-me-container");
-        if (aboutMeSection) {
-          aboutMeSection.scrollIntoView({ behavior: "smooth" });
-        }
-      }, 2000);
+      // HomePage reads this state and scrolls once it has mounted,
+      // instead of guessing with a fixed timeout.
+      navigate("/", { state: { scrollToAboutMe: true } });
     }
   };
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 px-4 sm:px-8 py-3 sm:py-4 flex flex-col sm:flex-row justify-center sm:justify-end items-center bg-transparent text-white backdrop-blur-sm">
-        <span className="mb-2 sm:mb-0 sm:mr-auto text-lg sm:text-xl font-semibold tracking-tight whitespace-nowrap">
+    <header className="fixed top-0 left-0 w-full z-50 px-4 sm:px-8 py-3 sm:py-4 flex flex-col md:flex-row justify-center md:justify-end items-center bg-transparent text-white backdrop-blur-sm">
+        <span className="mb-2 md:mb-0 md:mr-auto text-lg sm:text-xl font-semibold tracking-tight whitespace-nowrap">
           CKWrik&rsquo;s <span className="text-[#02a5c5]">Portfolio</span>
         </span>
-      <nav className="flex flex-wrap justify-center sm:justify-end gap-4 sm:gap-8 text-base sm:text-lg font-medium">
+      <nav className="flex flex-wrap justify-center md:justify-end items-center gap-3 sm:gap-6 lg:gap-8 text-[0.9375rem] sm:text-base lg:text-lg font-medium">
         <button
           onClick={handleAboutMeClick}
           className="hover:underline transition duration-300 bg-transparent"
@@ -45,6 +40,16 @@ const Header: React.FC = () => {
         >
           Projects
         </button>
+        {/* Opens the résumé in a new tab. Accent colour so it stands out from the page links. */}
+        <a
+          href={RESUME_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#02a5c5] hover:text-[#2cc4e2] hover:underline transition duration-300
+                     sm:no-underline sm:hover:no-underline sm:rounded-full sm:border sm:border-[#02a5c5] sm:bg-black/40 sm:px-3 sm:py-0.5 sm:hover:border-[#2cc4e2]"
+        >
+          Resume
+        </a>
       </nav>
     </header>
   );

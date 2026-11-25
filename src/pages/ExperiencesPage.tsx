@@ -13,15 +13,15 @@ const ExperiencesPage = () => {
   const pprcDescription = `App developer and research assistant at the Pacific Parkinson's Research Centre, contributing to the development of a desktop application for Parkinson's disease patients and assisting in research projects focused on patient data collection and analysis.`;
   
   const pprcDescriptionList = [
-    "Developing and improving modular apps that run in a desktop platform for monitoring and collecting Parkinson patients' statistics.",
-    "Enhancing existing apps by: Adding clear in-app instructions and simple media elements where needed; and improving layouts, navigation, and overall UI consistency.",
-    "Help test and debug core platform workflows, including: App installation/update; data saving, and analytic checks.",
+    "Developing and improving modular apps that run in a desktop platform for monitoring and collecting Parkinson's patients' statistics.",
+    "Enhancing existing apps by adding clear in-app instructions and simple media elements where needed, and improving layouts, navigation, and overall UI consistency.",
+    "Helping test and debug core platform workflows, including app installation/updates, data saving, and analytics checks.",
     "Collaborating with researchers to understand data needs and translate them into technical requirements for the application.",
     "Developing AI agents to automate patient interaction and data collection, improving efficiency and accuracy of research processes.",
   ];
 
   const aplicataDescription = `
-    Led the end-to-end development of cross-platform mobile and embedded software solutions at Applicata, contributing to both native and web platforms with a strong emphasis on performance, security, and user experience.
+    Led the end-to-end development of cross-platform mobile and embedded software solutions at Aplicata, contributing to both native and web platforms with a strong emphasis on performance, security, and user experience.
   `;
 
   const aplicataDescriptionList = [
@@ -30,7 +30,7 @@ const ExperiencesPage = () => {
     "Engineered embedded-C firmware to establish robust UWB communication protocols, facilitating secure and reliable Bluetooth and UWB connections between smartphones and embedded systems.",
     "Enhanced application security by integrating biometric authentication on iOS and Android platforms, implementing AES-128-CBC encryption for secure packet transmission within the mobile app and embedded systems using CommonCrypto and embedded SDK libraries.",
     "Successfully migrated critical system logic to new embedded hardware, ensuring backward compatibility while improving system stability and performance for seamless operations.",
-    "Developed and maintained advanced features for Applicata's portal using React and Next.js, collaborating closely with middleware teams to deliver scalable and efficient solutions.",
+    "Developed and maintained advanced features for Aplicata's portal using React and Next.js, collaborating closely with middleware teams to deliver scalable and efficient solutions.",
     "Designed and implemented interactive data visualizations and analytics dashboards with ApexCharts, empowering stakeholders with actionable insights and enhancing system monitoring capabilities.",
   ]
 
@@ -52,7 +52,7 @@ const ExperiencesPage = () => {
     <PageTransition>
       <div className="Experiences page-content overflow-x-hidden pb-20 sm:pb-25 lg:pb-25">
         <Header />
-        <div className="w-full px-4 sm:px-[10%] mt-[3.5rem] sm:mt-[4.5rem] lg:mt-[5rem] text-white">
+        <div className="w-full px-4 sm:px-[10%] mt-[6.5rem] md:mt-[5.5rem] lg:mt-[6rem] text-white">
           <div className="flex flex-col items-center sm:items-start">
             <h1 className="title">Experiences</h1>
           </div>
@@ -74,13 +74,13 @@ const ExperiencesPage = () => {
             date="2024 - 2025"
           />
           <ContentSection
-            heading="First Year Focus "
+            heading="First Year Focus"
             subtitle="Mentor, Event Planner"
             description={FYFDescription}
             date="2023"
           />
           <ContentSection
-            heading="OFS Tigers competitive Swim Team "
+            heading="OFS Tigers Competitive Swim Team"
             subtitle="Team Captain"
             description={OFSTigersDescription}
             date="2020-2021"
