@@ -1,288 +1,38 @@
-// import { Link } from "react-router-dom";
 import PageTransition from "../utils/pageTransition";
 import Header from "../utils/header";
 import Footer from "../utils/footer";
-import ContentSection from "../utils/contentSection";
+import { FeaturedProjectRow } from "../utils/featuredProject";
+import MoreProjects from "../utils/moreProjects";
+import { featuredProjects, otherProjects } from "../data/projects";
 
+// Project content lives in src/data/projects.ts (shared with the home page).
 const ProjectsPage = () => {
-
-  // Project Descriptions
-  /////////////////////////////////////////////////////////////////////////////////////
-  // Exoplanet vetting workshop
-  const ExoplanetDescription = `
-    Code to vet exoplanet candidates from the TESS mission using the transit method. Developed as a workshop for the UBC Astronomy Club for students to learn about exoplanets, the transit method, and various vetting techniques.
-  `;
-
-  const ExoplanetList = [
-    "Workshop developed in collaboration with Dr. Michelle Kunimoto, creator of the LEO-Vetter planet-vetting library, who gave a talk on exoplanet detection and vetting to pair with the coding session.",
-    "Students download a TESS light curve from NASA's MAST archive and process it with lightkurve (cleaning, binning, flattening, Box Least Squares period search and phase folding), the same steps used in real transit surveys.",
-    "Wrote five simulated stars (a planet, two eclipsing binaries, a starspot variable and an instrumental glitch) with batman and NumPy. Students code four vetting tests (size, odd/even depth, secondary eclipse, background), each with tiered hints, then compare their verdicts with LEO-Vetter's."
-  ];
-
-  const ExoplanetLink = "`https://github.com/UBCAstronomyClub/Exoplanet_Vetting`";
-  // Spotify stats
-  const SpotifyDescription = `
-    A web application that uses the Spotify API to display statistics on my listening habits and provide insights into my music preferences. The application displays various statistics, including top artists, top tracks, and listening history.
-  `;
-
-  const SpotifyList = [
-    "Set up endpoints for a cron job that collects data from the Spotify API every hour.",
-    "Designed a relational database on Supabase to store data from the cron job.",
-    "Developed the frontend to display data from the Spotify API and Supabase, showing current and comparative statistics.",
-  ];
-
-  const SpotifyLink = "https://github.com/coolkidwrik/Spotify_Stats";
-
-  const SpotifyExtra = (
-    <a href={"https://ckwrik-spotify-stats.vercel.app/"} target="_blank" rel="noopener noreferrer" className="text-inherit underline">Website Here</a>
-  );
-
-  // CMB isolation workshop
-  const CMBDescription = `
-    Code to simulate sky map data and isolate the Cosmic Microwave Background (CMB) signals from foreground emissions. Developed as a workshop for the UBC Astronomy Club for students to learn about CMB and component separation techniques.
-    `
-  
-  const CMBList = [
-    "Using physics models for dust, synchrotron and CMB emissions, generated simulated sky map data at different frequencies.",
-    "Applied component separation techniques, in particular, Markov Chain Monte Carlo (MCMC) methods, to estimate best-fit parameters for generating foreground emission maps compared to the simulated data for one pixel.",
-    "Used the best-fit parameters to generate foreground emission maps for all pixels using linear algebra, and subtracted these from the simulated data to isolate the CMB signal.",
-    "Analyzed Markov Chain results to evaluate the effectiveness of the component separation and foreground removal process, and to understand the uncertainties in the estimated parameters and the resulting CMB maps."
-
-  ];
-  const CMBLink = "https://github.com/UBCAstronomyClub/CMB_Isolation";
-  
-  // Travel Blog
-  const TravelBlogDescription = `Travel blog website to document my travels.`;
-  const TravelBlogList = [
-    "Developed a Next.js React frontend with TypeScript and used Sanity as a headless CMS backend.",
-    "Using GeoJSON data, Three.js and React Three Fiber, developed 3D interactive globe-based page routing.",
-    "Optimized for SEO by creating dynamic sitemaps and metadata.",
-    "Improved FCP by maximizing SSR for all page components where possible.",
-  ];
-  const TravelBlogLink = "https://github.com/coolkidwrik/Travel_Blog";
-  const TravelBlogExtra = (
-    <a href={"https://ckwrik-travel.vercel.app/"} target="_blank" rel="noopener noreferrer" className="text-inherit underline">Website Here</a>
-  );
-
-  // Thunderbird South Image Processing
-  const AstroDescription = `
-    Code to calibrate and process CCD data from UBC's Thunderbird South telescope. Developed as a workshop for the UBC Astronomy Club for students to learn about working with telescope data.
-  `;
-  const AstroList = [
-    "Used astropy and ccdproc to combine and process dark, flat, and science frames.",
-    "Filtered noise from science frames using the processed calibration data to remove hot pixels, vignetting, and dust noise.",
-    "Stacked data collected using different Johnson-Morgan system filters to create a color composite of the Lagoon Nebula."
-  ];
-  const AstroLink = "https://github.com/coolkidwrik/Thunderbird_South_Image_Processing";
-
-  // Shell Description
-  const ShellDescription = `
-    This repository contains various projects coded using ZSH that can be run and implemented into the UNIX command line. Here are some notable projects:
-  `;
-  const ShellList = [
-    "bfc: A compiler for a popular esoteric programming language.",
-    "diary: uses openssl to create and maintain a password encrypted document that can be accessed from anywhere on the machine.",
-    "todo_list: A working to-do list application with data persistence that runs on the command line."
-  ];
-  const ShellLink = "https://github.com/coolkidwrik/SHELL";
-  
-  // Shaders Description
-  const ShadersDescription = `
-    A variety of shaders coded and applied in GLSL, run on the browser using THREE.js.  
-  `;
-  const ShadersList = [
-    "Developed classic shaders from scratch, like Phong/Blinn-Phong and toon (cel), and created shaders of my own design (like diamond and static).",
-    "Implemented PBR and IBL for a damaged helmet object.",
-  ]
-  const ShadersLink = "https://github.com/coolkidwrik/Shaders";
-
-  const ShadersExtra = (
-    <a href={"https://wrik-shaders-demo.vercel.app/"} target="_blank" rel="noopener noreferrer" className="text-inherit underline">Demo Here</a>
-  );
-
-  // Solar System Description
-  const SolarSystemDescription = `
-    Using the THREE.js framework to create a 3D model of the solar system that is rendered on the browser.
-  `;
-  const SolarSystemList = [
-    "Utilized texture mapping and shadow mapping to create planets and lighting.",
-    "Computed orbital mechanics to make the planets orbit the sun.",
-    "Wrote shaders in GLSL to create atmospheric glow.",
-  ]
-  const SolarSystemLink = "https://github.com/coolkidwrik/Solar_System";
-
-  // Snake Game Description
-  const SnakeGameDescription = `
-    A snake game coded in Rust using the Piston game engine.
-  `;
-  const SnakeGameLink = "https://github.com/coolkidwrik/Snake_Game-Rust-";
-  
-  // SNASA Description
-  const SNASADescription = `
-    A database of data on stars, planets, star systems, and astronomical entities. Worked in a team of 3 using agile process to complete the project. My contributions included:
-  `;
-  const SNASADescriptionList = [
-    "Designed a Relational Database from ER model, to relational, and then SQL DDL.",
-    "Normalized Schemas using BCNF to reduce redundant data storage.",
-    "Implemented frontend with HTML and JavaScript, and handled Backend SQL requests with PHP.",
-  ]
-  const SNASALink = "https://github.com/coolkidwrik/SNASA";
-
-  // Complex Number Calculator Description
-  const ComplexNumberCalculatorDescription = `
-    Software to perform mathematical operations on complex numbers (addition, multiplication, logarithms, exponentiation, trig, etc) and used numerical approximations for non-elementary functions (gamma, error, and zeta).
-  `;
-  const ComplexNumberCalculatorList = [
-    "Used OOP concepts to create a complex number class through inheritance.",
-    "Derived and programmed all complex definitions for mathematical functions from scratch.",
-    "Utilized Python's unit testing module to implement automated testing for each function.",
-    "Used Python's Tkinter module to create a calculator graphical user interface.",
-  ]
-  const ComplexNumberCalculatorLink = "https://github.com/coolkidwrik/Complex-Numbers";
-
-  // Swim Team Organizer Description
-  const SwimTeamOrganizerDescription = `
-    Software to manage members of the team: add/remove members, manage captains, record swimmer statistics and swim styles. Developed to assist team coaches in management. Drawing inspiration from my old high school swim team.
-  `;
-  const SwimTeamOrganizerList = [
-    "Created both console-based and graphical user interfaces using Java Swing.",
-    "Used JSON objects and arrays to implement save and load functionality for data persistence.",
-    "Used comparison-based algorithms to recommend swim styles for members.",
-    "Calculated and displayed team statistics, dynamically rearranging members as statistics change.",
-    "Used JUnit for automated testing of the program's modules.",
-  ]
-  const SwimTeamOrganizerLink = "https://github.com/coolkidwrik/CPSC-210-project/tree/main/project_t2f7p";
-
-  // Coronary Heart Disease Prediction Model Description
-  const CoronaryHeartDiseasePredictionModelDescription = `
-    A model that helps classify angiographic disease status in patients. The model was developed to try and predict warning signs of the disease through other characteristics in patients.
-  `;
-  const CoronaryHeartDiseasePredictionModelList = [
-    "Analyzed data for feature selection, identifying best characteristics that correlate to angiographic disease.",
-    "Trained model using the k-nearest neighbor classification. Used Cross-validation to tune value for k.",
-    "Evaluated the model against held-out test data to measure its overall prediction accuracy.",
-  ]
-  const CoronaryHeartDiseasePredictionModelLink = "https://github.com/coolkidwrik/DSCI_project";
-  /////////////////////////////////////////////////////////////////////////////////////
-
-
   return (
     <PageTransition>
-      <div className="Projects page-content overflow-x-hidden pb-20 sm:pb-25 lg:pb-25">
+      <div className="Projects page-content overflow-x-hidden pb-20 sm:pb-24">
         <Header />
-        <div className="w-full px-4 sm:px-[10%] mt-[3.5rem] sm:mt-[4.5rem] lg:mt-[5rem] text-white">
-          <div className="flex flex-col items-center sm:items-start">
+
+        <div className="w-full px-4 sm:px-[10%] mt-[6.5rem] md:mt-[5.5rem] lg:mt-[6rem] text-white">
+          <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
             <h1 className="title">Projects</h1>
+            <p className="content-text mt-2 max-w-2xl text-gray-300">
+              Things I've built, from full-stack web apps to computer graphics and scientific computing.
+            </p>
           </div>
         </div>
-        <div className="flex flex-col items-start pt-2 sm:pt-4 lg:pt-6 px-4 sm:px-[10%] w-full text-white">
-          <ContentSection
-            heading="Exoplanet Vetting Workshop"
-            subtitle="Python"
-            description={ExoplanetDescription}
-            list={ExoplanetList}
-            date="2026"
-            link={ExoplanetLink}
-          />
-          <ContentSection
-            heading="Spotify Stats"
-            subtitle="React, TypeScript, Next.js, Spotify API"
-            description={SpotifyDescription}
-            list={SpotifyList}
-            date="2026"
-            link={SpotifyLink}
-            extra={SpotifyExtra}
-          />
-          <ContentSection
-            heading="CMB Isolation"
-            subtitle="Python"
-            description={CMBDescription}
-            list={CMBList}
-            date="2026"
-            link={CMBLink}
-          />
-          <ContentSection
-            heading="Travel Blog"
-            subtitle="React, TypeScript, Next.js, Sanity"
-            description={TravelBlogDescription}
-            list={TravelBlogList}
-            date="2026"
-            link={TravelBlogLink}
-            extra={TravelBlogExtra}
-          />
-          <ContentSection
-            heading="Thunderbird South Image Processing"
-            subtitle="Python"
-            description={AstroDescription}
-            list={AstroList}
-            date="2025"
-            link={AstroLink}
-          />
-          <ContentSection
-            heading="SHELL"
-            subtitle="ZSH"
-            description={ShellDescription}
-            list={ShellList}
-            date="2024"
-            link={ShellLink}
-          />
-          <ContentSection
-            heading="Shaders"
-            subtitle="GLSL, JavaScript"
-            description={ShadersDescription}
-            list={ShadersList}
-            date="2024"
-            link={ShadersLink}
-            extra = {ShadersExtra}
-          />
-          <ContentSection
-            heading="Solar System"
-            subtitle="JavaScript"
-            description={SolarSystemDescription}
-            list={SolarSystemList}
-            date="2024"
-            link={SolarSystemLink}
-          />
-          <ContentSection
-            heading="Snake Game"
-            subtitle="Rust"
-            description={SnakeGameDescription}
-            date="2023"
-            link={SnakeGameLink}
-          />
-          <ContentSection
-            heading="SNASA"
-            subtitle="PHP, JavaScript, SQL"
-            description={SNASADescription}
-            list={SNASADescriptionList}
-            date="2023"
-            link={SNASALink}
-          />
-          <ContentSection
-            heading="Complex Number Calculator"
-            subtitle="Python"
-            description={ComplexNumberCalculatorDescription}
-            list={ComplexNumberCalculatorList}
-            date="2023"
-            link={ComplexNumberCalculatorLink}
-          />
-          <ContentSection
-            heading="Swim Team Organizer"
-            subtitle="Java"
-            description={SwimTeamOrganizerDescription}
-            list={SwimTeamOrganizerList}
-            date="2022"
-            link={SwimTeamOrganizerLink}
-          />
-          <ContentSection
-            heading="Coronary Heart Disease Prediction Model"
-            subtitle="R"
-            description={CoronaryHeartDiseasePredictionModelDescription}
-            list={CoronaryHeartDiseasePredictionModelList}
-            date="2022"
-            link={CoronaryHeartDiseasePredictionModelLink}
-          />
-        </div>
+
+        <section aria-labelledby="featured-heading" className="w-full px-4 sm:px-[10%] mt-8 text-white">
+          <h2 id="featured-heading" className="heading text-left">Featured</h2>
+          {featuredProjects.map((project, i) => (
+            <FeaturedProjectRow key={project.id} project={project} reverse={i % 2 === 1} />
+          ))}
+        </section>
+
+        <section aria-labelledby="more-heading" className="w-full px-4 sm:px-[10%] mt-10 text-white">
+          <h2 id="more-heading" className="heading text-left">More projects</h2>
+          <p className="mb-6 text-left text-gray-400">Click a project to see details.</p>
+          <MoreProjects projects={otherProjects} />
+        </section>
       </div>
       <Footer />
     </PageTransition>

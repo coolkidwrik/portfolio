@@ -52,7 +52,7 @@ const ExperiencesPage = () => {
     <PageTransition>
       <div className="Experiences page-content overflow-x-hidden pb-20 sm:pb-25 lg:pb-25">
         <Header />
-        <div className="w-full px-4 sm:px-[10%] mt-[3.5rem] sm:mt-[4.5rem] lg:mt-[5rem] text-white">
+        <div className="w-full px-4 sm:px-[10%] mt-[6.5rem] md:mt-[5.5rem] lg:mt-[6rem] text-white">
           <div className="flex flex-col items-center sm:items-start">
             <h1 className="title">Experiences</h1>
           </div>

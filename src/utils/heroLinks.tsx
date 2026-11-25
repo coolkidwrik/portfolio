@@ -1,12 +1,11 @@
 import { FaGithub, FaLinkedin, FaFileAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { RESUME_URL, GITHUB_URL, LINKEDIN_URL, EMAIL } from "./links";
+import { primaryButton, secondaryButton, buttonSizes } from "./buttonStyles";
 
 // The call-to-action row under the name in the hero.
 // Résumé is the primary (filled) action; the rest are secondary (outlined).
-//
-// Every link sets its own text colour for normal *and* hover states, because
-// index.css has a global `a:hover { color: ... }` rule that would otherwise win.
+// Button styles are shared with the project cards (see buttonStyles.ts).
 
 interface HeroLinksProps {
   /** "sm" for the compact mobile overlay, "md" for tablet/desktop */
@@ -15,20 +14,9 @@ interface HeroLinksProps {
 }
 
 const HeroLinks: React.FC<HeroLinksProps> = ({ size = "md", className = "" }) => {
-  const sizing =
-    size === "sm"
-      ? "gap-1.5 px-3 py-1.5 text-sm"
-      : "gap-2 px-4 py-2 text-base";
-
-  const base =
-    `inline-flex items-center rounded-full font-medium transition-colors duration-200 ` +
-    `focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#02a5c5] ${sizing}`;
-
-  // Dark text on the accent colour: white on #02a5c5 is too low-contrast for small text.
-  const primary = `${base} bg-[#02a5c5] text-[#00141a] hover:bg-[#2cc4e2] hover:text-[#00141a]`;
-  const secondary =
-    `${base} border border-white/40 bg-black/30 backdrop-blur-sm text-white ` +
-    `hover:border-[#02a5c5] hover:text-[#02a5c5]`;
+  const sizing = buttonSizes[size];
+  const primary = `${primaryButton} ${sizing}`;
+  const secondary = `${secondaryButton} ${sizing}`;
 
   return (
     <div className={`flex flex-wrap justify-center gap-2 sm:gap-3 ${className}`}>

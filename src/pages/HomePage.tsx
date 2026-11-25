@@ -7,6 +7,8 @@ import Footer from "../utils/footer";
 import Header from "../utils/header";
 import { scrollToAboutMe } from "../utils/scrollToAboutMe";
 import HeroLinks from "../utils/heroLinks";
+import { FeaturedProjectCard } from "../utils/featuredProject";
+import { featuredProjects } from "../data/projects";
 
 // About Me text: a single source of truth for both the desktop and mobile layouts,
 // so the two can't drift out of sync again.
@@ -26,24 +28,6 @@ const aboutMeMobileParagraphs = [
   aboutMeIntro,
   "I've lived in three countries, meeting incredible people and immersing myself in diverse cultures. I'm passionate about building innovative software and pushing the boundaries of technology.",
   "Beyond tech, I love adventure—hiking, swimming, learning languages, and playing guitar. Let's connect!",
-];
-
-const externalLinks = [
-  {
-    title: "Travel Blog",
-    description: "My stories, photography, and experiences from around the world.",
-    url: "https://ckwrik-travel.vercel.app/"
-  },
-  {
-    title: "Spotify Statistics",
-    description: "Learn more about my spotify tastes and music preferences through this website",
-    url: "https://ckwrik-spotify-stats.vercel.app"
-  },
-  {
-    title: "Computer Graphics Shaders Demo",
-    description: "Interactive web demo showcasing my custom GLSL shaders built with Three.js.",
-    url: "https://wrik-shaders-demo.vercel.app/"
-  },
 ];
 
 function HomePage() {
@@ -178,31 +162,21 @@ function HomePage() {
                 <p className="heading mt-2 max-w-[200px]">Projects</p>
               </div>
             </div>
-            <div className="mt-20 w-full flex flex-col items-center">
-              <h2 className="heading mb-6 text-center">Check out my other sites!</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-5xl">
-              {externalLinks.map((link, index) => (
-                <a
-                  key={index}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-[#111] border border-gray-800 rounded-2xl p-6 
-                            hover:border-blue-500 hover:shadow-lg 
-                            hover:shadow-blue-500/20 
-                            transition-all duration-300 
-                            group"
-                >
-                  <h3 className="text-xl font-semibold text-white group-hover:text-blue-400 transition-colors">
-                    {link.title}
-                  </h3>
-                  <p className="text-gray-400 mt-2 text-sm">
-                    {link.description}
-                  </p>
-                </a>
-              ))}
-            </div>
-            </div>
+            {/* Featured projects: same data as the Projects page (src/data/projects.ts) */}
+            <section aria-labelledby="home-featured-heading" className="mt-20 w-full flex flex-col items-center">
+              <h2 id="home-featured-heading" className="heading mb-6 text-center">Featured projects</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 w-full max-w-6xl">
+                {featuredProjects.map((project) => (
+                  <FeaturedProjectCard key={project.id} project={project} />
+                ))}
+              </div>
+              <button
+                onClick={() => navigate("/Projects")}
+                className="mt-8 border-0 bg-transparent text-lg font-medium text-[#02a5c5] hover:text-[#2cc4e2] hover:underline"
+              >
+                See all projects &rarr;
+              </button>
+            </section>
           </div>
           <Footer />
         </div>
