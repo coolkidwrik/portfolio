@@ -1,7 +1,5 @@
-import { useEffect, useRef , useState} from 'react';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
-import { introCanvas } from '../utils/introCanvas';
-import OrbButton  from '../utils/OrbButton';
 import PageTransition from "../utils/pageTransition";
 import Footer from "../utils/footer";
 import Header from "../utils/header";
@@ -9,6 +7,15 @@ import { scrollToAboutMe } from "../utils/scrollToAboutMe";
 import HeroLinks from "../utils/heroLinks";
 import { FeaturedProjectCard } from "../utils/featuredProject";
 import { featuredProjects } from "../data/projects";
+import { usePageTitle } from "../utils/usePageTitle";
+
+// The 3D code (Three.js, the scene, the orbs) is loaded on demand instead of being
+// part of the site's main JavaScript file. The page's text and buttons render right
+// away, and visitors who land on Projects or Experiences never download Three.js.
+const OrbButton = lazy(() => import("../utils/OrbButton"));
+
+// Same size as an orb, so nothing shifts while the 3D code is still loading.
+const OrbPlaceholder = () => <div style={{ width: "min(20vw, 5rem)", height: "min(20vw, 5rem)" }} />;
 
 // About Me text: a single source of truth for both the desktop and mobile layouts,
 // so the two can't drift out of sync again.
@@ -31,6 +38,7 @@ const aboutMeMobileParagraphs = [
 ];
 
 function HomePage() {
+  usePageTitle();
     // introCanvas creates its own <canvas> inside this element (see introCanvas.tsx)
     const canvasHostRef = useRef<HTMLDivElement>(null);
     const [showText, setShowText] = useState(false);
@@ -44,13 +52,21 @@ function HomePage() {
   
     useEffect(() => {
       window.addEventListener('scroll', handleScroll);
-      const cleanup = introCanvas(canvasHostRef);
+
+      // Load the 3D scene module, then start it. If the page is left before it
+      // finishes loading, `cancelled` stops it from starting on a dead page.
+      let cleanup: (() => void) | void;
+      let cancelled = false;
+      import('../utils/introCanvas').then(({ introCanvas }) => {
+        if (!cancelled) cleanup = introCanvas(canvasHostRef);
+      });
   
       const timer = setTimeout(() => {
         setShowText(true);
       }, 2000);
   
       return () => {
+        cancelled = true;
         window.removeEventListener('scroll', handleScroll);
         if (typeof cleanup === 'function') {
           cleanup();
@@ -121,7 +137,7 @@ function HomePage() {
                   (On lg+ both are visible and the name row, being first, wins.) */}
               <img
                 data-about-me
-                src="/profile_pic.jpg"
+                src="/profile_pic.webp" width={800} height={887}
                 alt="Wrik Steven Sen"
                 className={`profile-picture ${isScrolled ? "show" : ""} w-[16rem] lg:w-full lg:max-w-[25rem] h-auto object-cover mt-10 lg:mt-0`}
               />
@@ -141,7 +157,7 @@ function HomePage() {
             
             {/* Mobile: image and about-me shown here */}
             <div data-about-me className="md:hidden flex flex-col items-center text-center mb-10">
-              <img src="/profile_pic.jpg" alt="Wrik Steven Sen" className="w-[16rem] sm:w-[18rem] h-auto object-cover rounded-lg mb-6" />
+              <img src="/profile_pic.webp" width={800} height={887} alt="Wrik Steven Sen" className="w-[16rem] sm:w-[18rem] h-auto object-cover rounded-lg mb-6" />
               <h2 className="heading mb-3">About Me</h2>
               <div className="content-text text-sm sm:text-base leading-relaxed max-w-2xl space-y-2">
                 {aboutMeMobileParagraphs.map((text) => (
@@ -154,11 +170,15 @@ function HomePage() {
             <p className='content-text'>Click an orb to learn more.</p>
             <div className="w-full flex justify-evenly items-start p-10">
               <div className="flex flex-col items-center text-center">
-                <OrbButton onClick={() => navigate("/Experiences")} />
+                <Suspense fallback={<OrbPlaceholder />}>
+                  <OrbButton onClick={() => navigate("/Experiences")} />
+                </Suspense>
                 <p className="heading mt-2 max-w-[200px]">Experiences</p>
               </div>
               <div className="flex flex-col items-center text-center">
-                <OrbButton onClick={() => navigate("/Projects")} lightX={-2.5}/>
+                <Suspense fallback={<OrbPlaceholder />}>
+                  <OrbButton onClick={() => navigate("/Projects")} lightX={-2.5}/>
+                </Suspense>
                 <p className="heading mt-2 max-w-[200px]">Projects</p>
               </div>
             </div>

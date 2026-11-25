@@ -1,7 +1,9 @@
 import * as THREE from 'three';
 import { setup } from '../utils/setup.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import bgimage from '../assets/images/void.png';
+// The .glb models are compressed with meshopt (see README); this decodes them.
+import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
+import bgimage from '../assets/images/void.webp';
 
 // Import the GLB file
 import spaceBoi from '../assets/glb/space_boi.glb';
@@ -94,6 +96,7 @@ export const introCanvas = (hostRef: React.RefObject<HTMLElement | null>): (() =
 
     {
       const gltfLoader = new GLTFLoader();
+      gltfLoader.setMeshoptDecoder(MeshoptDecoder);
 
       // load anti spiral
       gltfLoader.load(

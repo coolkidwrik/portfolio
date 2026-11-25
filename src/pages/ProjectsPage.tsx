@@ -4,9 +4,11 @@ import Footer from "../utils/footer";
 import { FeaturedProjectRow } from "../utils/featuredProject";
 import MoreProjects from "../utils/moreProjects";
 import { featuredProjects, otherProjects } from "../data/projects";
+import { usePageTitle } from "../utils/usePageTitle";
 
 // Project content lives in src/data/projects.ts (shared with the home page).
 const ProjectsPage = () => {
+  usePageTitle("Projects");
   return (
     <PageTransition>
       <div className="Projects page-content overflow-x-hidden pb-20 sm:pb-24">

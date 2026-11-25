@@ -3,9 +3,11 @@ import PageTransition from "../utils/pageTransition";
 import Footer from "../utils/footer";
 import Header from "../utils/header";
 import ContentSection from "../utils/contentSection";
+import { usePageTitle } from "../utils/usePageTitle";
 // import OrbButton from "../utils/OrbButton";
 
 const ExperiencesPage = () => {
+  usePageTitle("Experiences");
   // const navigate = useNavigate();
 
   // Experience Descriptions
