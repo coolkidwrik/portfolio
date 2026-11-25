@@ -4,9 +4,9 @@
 
 My personal portfolio: a React + TypeScript single-page app with an interactive Three.js scene, custom GLSL shaders, and scroll-driven camera animation.
 
-![Hero section: a 3D space scene with my name over it](public/portfolio.png)
+![Hero section: a 3D space scene with my name over it](docs/hero.jpg)
 
-![About section: photo and bio side by side](public/about_me.png)
+![About section: photo and bio side by side](docs/about.jpg)
 
 ## Features
 
@@ -40,10 +40,30 @@ The scene lives in [`src/utils/introCanvas.tsx`](src/utils/introCanvas.tsx) and 
 
 The orb buttons ([`OrbButton.tsx`](src/utils/OrbButton.tsx)) are tiny separate scenes. They only re-render when you scroll, at most once per frame, rather than running a 60 fps loop.
 
+## Performance
+
+- **Compressed 3D models.** The `.glb` files use [meshopt](https://meshoptimizer.org/) geometry compression and WebP textures, which took them from 7.4 MB to 1.0 MB with no visible change. `GLTFLoader` decodes them with three.js's `MeshoptDecoder`.
+- **Code splitting.** Three.js, the scene and the orbs load on demand, only on the home page, so visitors who land on Projects or Experiences never download them. React, Framer Motion and Three.js each get their own file (see [`vite.config.ts`](vite.config.ts)), so they stay cached between deploys.
+- **Lightweight images and clips.** The profile photo and scene background are WebP. The project clips are small MP4s that only download and play while on screen.
+
+On a simulated slow 4G connection, the home page went from downloading 8.2 MB to 1.5 MB, and the full 3D scene now loads in about 8 seconds instead of 42.
+
+### Adding or replacing a 3D model
+
+Compress new models the same way before adding them to `src/assets/glb/`:
+
+```bash
+npx @gltf-transform/cli optimize input.glb output.glb \
+  --compress meshopt --texture-compress webp --texture-size 1024 --simplify false
+```
+
+`--simplify false` keeps the original geometry exactly. Leave it out to also reduce polygon counts, then check that the model still looks right.
+
 ## Project structure
 
 ```
 src/
+├── data/projects.ts     # all project content (Projects page + home page cards)
 ├── pages/               # HomePage, ExperiencesPage, ProjectsPage
 ├── utils/
 │   ├── introCanvas.tsx  # main Three.js scene
@@ -53,12 +73,13 @@ src/
 │   ├── header.tsx, footer.tsx, contentSection.tsx, pageTransition.tsx
 │   └── scrollToAboutMe.ts
 ├── assets/
-│   ├── glb/             # 3D models (see Credits)
+│   ├── glb/             # 3D models, meshopt-compressed (see Credits)
 │   └── images/          # scene background
 ├── App.tsx              # routes
 ├── App.css, index.css   # global and component styles
 └── tailwind.css         # Tailwind directives (compiled at build time)
-public/                  # profile photo, favicon
+public/                  # profile photo, favicon, link-preview image, robots.txt, sitemap.xml
+└── media/               # project clips (MP4) and posters (WebP)
 vercel.json              # SPA rewrite so deep links like /Projects work
 ```
 
