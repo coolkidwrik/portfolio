@@ -6,6 +6,7 @@ import PageTransition from "../utils/pageTransition";
 import Footer from "../utils/footer";
 import Header from "../utils/header";
 import { scrollToAboutMe } from "../utils/scrollToAboutMe";
+import HeroLinks from "../utils/heroLinks";
 
 // About Me text: a single source of truth for both the desktop and mobile layouts,
 // so the two can't drift out of sync again.
@@ -95,17 +96,24 @@ function HomePage() {
             <div ref={canvasHostRef} className="contents" />
             <Header />
             
-            {/* Mobile/tablet: only name overlay at bottom of canvas */}
-            <div className="md:hidden absolute inset-x-0 bottom-8 flex flex-col items-center text-center px-4">
-              <div className={`animated-text ${showText ? 'show' : ''} text-white`}>
+            {/*
+              Phones + tablets (< 1024px): name and buttons overlaid at the bottom of the
+              first screen. It's sized to the first screen (h-[100svh]) rather than the
+              container, because on tablets the container also holds the stacked About section.
+              pointer-events-none lets touches pass through to the page; the content re-enables them.
+            */}
+            <div className="lg:hidden absolute inset-x-0 top-0 h-[100svh] z-[2] flex flex-col justify-end items-center text-center px-4 pb-8 pointer-events-none">
+              <div className={`animated-text ${showText ? 'show' : ''} text-white pointer-events-auto`}>
                 <h1 className='text-[2rem] sm:text-[2.5rem]'>Wrik Steven Sen</h1>
                 <h3 className='text-[1.1rem] sm:text-[1.25rem] mt-1'>Software Engineer</h3>
+                <HeroLinks size="sm" className="mt-4" />
               </div>
             </div>
 
             {/*
               Desktop hero.
-              - md (768–1023px): everything stacked and centered below the canvas.
+              - md (768–1023px): photo and About Me stacked and centered below the canvas
+                (the name and buttons are in the overlay above on these sizes).
               - lg (1024px+): a grid laid over the canvas (z-[1] keeps it above the canvas): name/title on the first row,
                 then photo | About Me side by side. Because this is normal layout (not
                 position: absolute), the columns can't overlap, and if the text needs
@@ -114,20 +122,24 @@ function HomePage() {
             <div className="hidden md:flex lg:grid w-full flex-col items-center lg:items-start text-white relative z-[1]
                             lg:grid-cols-[minmax(0,3fr)_minmax(0,4fr)] lg:gap-x-[4%] lg:gap-y-2
                             lg:pl-[12%] lg:pr-[10%] lg:pt-[35vh] lg:pb-16">
-              {/* Row 1: name + title (spans both columns so the big name never wraps) */}
+              {/* Row 1 (lg+ only): name + title + buttons, spanning both columns so the big name never wraps */}
               {/* data-about-me: the header's "About Me" link scrolls here, so the name, photo and text are all in view */}
-              <div data-about-me className={`animated-text ${showText ? 'show' : ''} lg:col-span-2 lg:text-left px-4 lg:px-0 pt-8 lg:pt-0`}>
+              <div data-about-me className={`animated-text ${showText ? 'show' : ''} hidden lg:block lg:col-span-2 lg:text-left`}>
                 <div className="inline-flex flex-col items-center text-center">
                   <h1 className='text-[2.5rem] lg:text-[4rem] text-white'>Wrik Steven Sen</h1>
                   <h3 className='text-[1.5rem] lg:text-[1.875rem] text-white mt-2'>Software Engineer</h3>
+                  <HeroLinks className="mt-5" />
                 </div>
               </div>
 
               {/* Row 2, left: photo. Shrinks with its column, capped at the original 25rem. */}
+              {/* data-about-me here too: on tablets the name row is hidden, so "About Me" scrolls to the photo.
+                  (On lg+ both are visible and the name row, being first, wins.) */}
               <img
+                data-about-me
                 src="/profile_pic.jpg"
                 alt="Wrik Steven Sen"
-                className={`profile-picture ${isScrolled ? "show" : ""} w-[16rem] lg:w-full lg:max-w-[25rem] h-auto object-cover mt-2 lg:mt-0`}
+                className={`profile-picture ${isScrolled ? "show" : ""} w-[16rem] lg:w-full lg:max-w-[25rem] h-auto object-cover mt-10 lg:mt-0`}
               />
 
               {/* Row 2, right: About Me */}

@@ -1,5 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { scrollToAboutMe } from "./scrollToAboutMe";
+import { RESUME_URL } from "./links.ts";
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const Header: React.FC = () => {
         <span className="mb-2 sm:mb-0 sm:mr-auto text-lg sm:text-xl font-semibold tracking-tight whitespace-nowrap">
           CKWrik&rsquo;s <span className="text-[#02a5c5]">Portfolio</span>
         </span>
-      <nav className="flex flex-wrap justify-center sm:justify-end gap-4 sm:gap-8 text-base sm:text-lg font-medium">
+      <nav className="flex flex-wrap justify-center sm:justify-end items-center gap-3 sm:gap-8 text-[0.9375rem] sm:text-lg font-medium">
         <button
           onClick={handleAboutMeClick}
           className="hover:underline transition duration-300 bg-transparent"
@@ -39,6 +40,16 @@ const Header: React.FC = () => {
         >
           Projects
         </button>
+        {/* Opens the résumé in a new tab. Accent colour so it stands out from the page links. */}
+        <a
+          href={RESUME_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#02a5c5] hover:text-[#2cc4e2] hover:underline transition duration-300
+                     sm:no-underline sm:hover:no-underline sm:rounded-full sm:border sm:border-[#02a5c5] sm:bg-black/40 sm:px-3 sm:py-0.5 sm:hover:border-[#2cc4e2]"
+        >
+          Resume
+        </a>
       </nav>
     </header>
   );
