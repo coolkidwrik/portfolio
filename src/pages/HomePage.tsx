@@ -9,6 +9,7 @@ import { scrollToAboutMe } from "../utils/scrollToAboutMe";
 import HeroLinks from "../utils/heroLinks";
 import { FeaturedProjectCard } from "../utils/featuredProject";
 import { featuredProjects } from "../data/projects";
+import { usePageTitle } from "../utils/usePageTitle";
 
 // About Me text: a single source of truth for both the desktop and mobile layouts,
 // so the two can't drift out of sync again.
@@ -31,6 +32,7 @@ const aboutMeMobileParagraphs = [
 ];
 
 function HomePage() {
+  usePageTitle();
     // introCanvas creates its own <canvas> inside this element (see introCanvas.tsx)
     const canvasHostRef = useRef<HTMLDivElement>(null);
     const [showText, setShowText] = useState(false);
