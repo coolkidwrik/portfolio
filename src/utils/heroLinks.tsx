@@ -20,13 +20,13 @@ const HeroLinks: React.FC<HeroLinksProps> = ({ size = "md", className = "" }) =>
 
   return (
     <div className={`flex flex-wrap justify-center gap-2 sm:gap-3 ${className}`}>
-      <a href={RESUME_URL} target="_blank" rel="noopener noreferrer" className={primary}>
+      <a href={RESUME_URL} target="_blank" rel="noopener noreferrer" aria-label="Résumé (opens in new tab)" className={primary}>
         <FaFileAlt aria-hidden="true" /> Resume
       </a>
-      <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" className={secondary}>
+      <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" aria-label="GitHub (opens in new tab)" className={secondary}>
         <FaGithub aria-hidden="true" /> GitHub
       </a>
-      <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" className={secondary}>
+      <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn (opens in new tab)" className={secondary}>
         <FaLinkedin aria-hidden="true" /> LinkedIn
       </a>
       <a href={`mailto:${EMAIL}`} className={secondary}>

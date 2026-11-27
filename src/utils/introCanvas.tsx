@@ -197,6 +197,10 @@ export const introCanvas = (hostRef: React.RefObject<HTMLElement | null>): (() =
     scene.add(ball2);
 
 
+    // "Reduce motion" (an OS/browser accessibility setting): show the scene as a still
+    // picture. No fly-in, no scroll-driven camera, no spinning or floating models.
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     // Camera position for a given scroll position
     /////////////////////////////////////////////////////////
     const introTargetPosition = { x: 0, y: 2.2, z: 9.5 }; // resting spot at the top of the page
@@ -204,7 +208,7 @@ export const introCanvas = (hostRef: React.RefObject<HTMLElement | null>): (() =
     const scrollCameraPosition = () => {
         const maxScroll = window.innerHeight * 2; // Adjust the max scroll range
         const normalizedScroll = Math.min(window.scrollY / maxScroll, 1); // Normalize to [0,1]
-        if (normalizedScroll === 0) return introTargetPosition;
+        if (normalizedScroll === 0 || reduceMotion) return introTargetPosition;
         return {
             x: 0 - normalizedScroll * 40,  // Move x from 0 to -40
             y: 2 - normalizedScroll * 25,  // Move y from 2 to -23
@@ -219,13 +223,13 @@ export const introCanvas = (hostRef: React.RefObject<HTMLElement | null>): (() =
     /////////////////////////////////////////////////////////
     const startTime = Date.now();
     const initialCameraPosition = { ...camera.position }; // Store initial camera position
-    const duration = 2000;  // 2 seconds duration
+    const duration = reduceMotion ? 0 : 2000;  // 2 seconds, or jump straight there for reduced motion
     let introDone = false;
 
     const animateCamera = () => {
     if (!isMounted) return;
     const elapsed = Date.now() - startTime;
-    const progress = Math.min(elapsed / duration, 1);  // Progress value between 0 and 1
+    const progress = duration === 0 ? 1 : Math.min(elapsed / duration, 1);  // Progress value between 0 and 1
     const target = scrollCameraPosition();
 
     // Lerp (Linear Interpolate) the camera position
@@ -265,6 +269,8 @@ export const introCanvas = (hostRef: React.RefObject<HTMLElement | null>): (() =
     function update() {
       if (!isMounted) return;  // Prevent updates after unmount
 
+      // Everything in this block is continuous motion; skipped for reduced motion.
+      if (!reduceMotion) {
       // update uniforms
       ticks.value += 0.01;
 
@@ -291,6 +297,7 @@ export const introCanvas = (hostRef: React.RefObject<HTMLElement | null>): (() =
         benny.position.y = 0.2 * Math.sin(2 * ticks.value) + 0.3;
         // benny.rotateOnAxis(new THREE.Vector3(0, 1, 0), -0.001);
       }
+      } // end of reduced-motion block
 
 
       // renderer.render(scene, camera);

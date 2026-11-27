@@ -13,6 +13,7 @@ const ProjectsPage = () => {
     <PageTransition>
       <div className="Projects page-content overflow-x-hidden pb-20 sm:pb-24">
         <Header />
+        <main id="main-content" tabIndex={-1} className="outline-none">
 
         <div className="w-full px-4 sm:px-[10%] mt-[6.5rem] md:mt-[5.5rem] lg:mt-[6rem] text-white">
           <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
@@ -35,6 +36,7 @@ const ProjectsPage = () => {
           <p className="mb-6 text-left text-gray-400">Click a project to see details.</p>
           <MoreProjects projects={otherProjects} />
         </section>
+        </main>
       </div>
       <Footer />
     </PageTransition>

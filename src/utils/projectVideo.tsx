@@ -15,12 +15,18 @@ interface ProjectVideoProps {
   /** Describes the clip for screen readers, e.g. "Travel Blog demo". */
   label: string;
   className?: string;
+  /** How wide the clip is displayed, so the browser can pick the right poster size. */
+  sizes?: string;
 }
+
+// Each poster has a 640px-wide version next to it ("travel-poster-640.webp"),
+// so phones and small cards don't download the full 1280px image.
+const smallPoster = (poster: string) => poster.replace(/\.webp$/, "-640.webp");
 
 const prefersReducedMotion = () =>
   typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-const ProjectVideo: React.FC<ProjectVideoProps> = ({ video, poster, label, className = "" }) => {
+const ProjectVideo: React.FC<ProjectVideoProps> = ({ video, poster, label, className = "", sizes = "100vw" }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [reducedMotion] = useState(prefersReducedMotion);
@@ -74,6 +80,8 @@ const ProjectVideo: React.FC<ProjectVideoProps> = ({ video, poster, label, class
     >
       <img
         src={poster}
+        srcSet={`${smallPoster(poster)} 640w, ${poster} 1280w`}
+        sizes={sizes}
         alt={`${label} (screenshot)`}
         loading="lazy"
         decoding="async"

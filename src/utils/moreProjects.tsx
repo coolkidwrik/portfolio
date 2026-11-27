@@ -39,6 +39,7 @@ const MoreProjects: React.FC<{ projects: Project[] }> = ({ projects }) => (
               href={project.codeUrl}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label={`${project.title}: code on GitHub (opens in new tab)`}
               className="mt-3 inline-flex items-center gap-1.5 text-[#02a5c5] hover:text-[#2cc4e2] hover:underline"
             >
               <FaGithub aria-hidden="true" /> View code

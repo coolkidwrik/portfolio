@@ -15,6 +15,11 @@ import { usePageTitle } from "../utils/usePageTitle";
 const OrbButton = lazy(() => import("../utils/OrbButton"));
 
 // Same size as an orb, so nothing shifts while the 3D code is still loading.
+// Resets the global <button> styles from index.css so the orb buttons look as before.
+const orbButtonClass =
+  "flex flex-col items-center text-center p-0 border-0 bg-transparent cursor-pointer rounded-xl " +
+  "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#02a5c5]";
+
 const OrbPlaceholder = () => <div style={{ width: "min(20vw, 5rem)", height: "min(20vw, 5rem)" }} />;
 
 // About Me text: a single source of truth for both the desktop and mobile layouts,
@@ -90,11 +95,13 @@ function HomePage() {
     return (
       <PageTransition>
         <div className="App min-h-screen flex flex-col">
+          <Header />
+          {/* <main> marks the page's main content for screen readers (and the header's skip link). */}
+          <main id="main-content" tabIndex={-1} className="flex flex-col grow w-full outline-none">
           {/* Container for the canvas */}
           <div className="canvas-container relative flex flex-col items-center justify-center lg:justify-start w-full grow">
             {/* `contents` = no box of its own, so the canvas lays out exactly as before */}
             <div ref={canvasHostRef} className="contents" />
-            <Header />
             
             {/*
               Phones + tablets (< 1024px): name and buttons overlaid at the bottom of the
@@ -105,7 +112,7 @@ function HomePage() {
             <div className="lg:hidden absolute inset-x-0 top-0 h-[100svh] z-[2] flex flex-col justify-end items-center text-center px-4 pb-8 pointer-events-none">
               <div className={`animated-text ${showText ? 'show' : ''} text-white pointer-events-auto`}>
                 <h1 className='text-[2rem] sm:text-[2.5rem]'>Wrik Steven Sen</h1>
-                <h3 className='text-[1.1rem] sm:text-[1.25rem] mt-1'>Software Engineer</h3>
+                <p className='text-[1.1rem] sm:text-[1.25rem] mt-1 font-bold'>Software Engineer</p>
                 <HeroLinks size="sm" className="mt-4" />
               </div>
             </div>
@@ -127,7 +134,7 @@ function HomePage() {
               <div data-about-me className={`animated-text ${showText ? 'show' : ''} hidden lg:block lg:col-span-2 lg:text-left`}>
                 <div className="inline-flex flex-col items-center text-center">
                   <h1 className='text-[2.5rem] lg:text-[4rem] text-white'>Wrik Steven Sen</h1>
-                  <h3 className='text-[1.5rem] lg:text-[1.875rem] text-white mt-2'>Software Engineer</h3>
+                  <p className='text-[1.5rem] lg:text-[1.875rem] text-white mt-2 font-bold'>Software Engineer</p>
                   <HeroLinks className="mt-5" />
                 </div>
               </div>
@@ -138,6 +145,8 @@ function HomePage() {
               <img
                 data-about-me
                 src="/profile_pic.webp" width={800} height={887}
+                srcSet="/profile_pic-400.webp 400w, /profile_pic-600.webp 600w, /profile_pic.webp 800w"
+                sizes="(min-width: 1024px) 25rem, 16rem"
                 alt="Wrik Steven Sen"
                 className={`profile-picture ${isScrolled ? "show" : ""} w-[16rem] lg:w-full lg:max-w-[25rem] h-auto object-cover mt-10 lg:mt-0`}
               />
@@ -157,7 +166,7 @@ function HomePage() {
             
             {/* Mobile: image and about-me shown here */}
             <div data-about-me className="md:hidden flex flex-col items-center text-center mb-10">
-              <img src="/profile_pic.webp" width={800} height={887} alt="Wrik Steven Sen" className="w-[16rem] sm:w-[18rem] h-auto object-cover rounded-lg mb-6" />
+              <img src="/profile_pic.webp" width={800} height={887} srcSet="/profile_pic-400.webp 400w, /profile_pic-600.webp 600w, /profile_pic.webp 800w" sizes="(min-width: 640px) 18rem, 16rem" alt="Wrik Steven Sen" className="w-[16rem] sm:w-[18rem] h-auto object-cover rounded-lg mb-6" />
               <h2 className="heading mb-3">About Me</h2>
               <div className="content-text text-sm sm:text-base leading-relaxed max-w-2xl space-y-2">
                 {aboutMeMobileParagraphs.map((text) => (
@@ -166,21 +175,23 @@ function HomePage() {
               </div>
             </div>
 
-            <h1 className='heading'> More about me</h1>
+            <h2 className='heading leading-[1.1]'>More about me</h2>
             <p className='content-text'>Click an orb to learn more.</p>
+            {/* Each orb and its label form one real <button>: clickable anywhere, reachable
+                with Tab, activated with Enter/Space, and announced as "Experiences, button". */}
             <div className="w-full flex justify-evenly items-start p-10">
-              <div className="flex flex-col items-center text-center">
+              <button type="button" onClick={() => navigate("/Experiences")} className={orbButtonClass}>
                 <Suspense fallback={<OrbPlaceholder />}>
-                  <OrbButton onClick={() => navigate("/Experiences")} />
+                  <OrbButton />
                 </Suspense>
-                <p className="heading mt-2 max-w-[200px]">Experiences</p>
-              </div>
-              <div className="flex flex-col items-center text-center">
+                <span className="heading mt-2 max-w-[200px]">Experiences</span>
+              </button>
+              <button type="button" onClick={() => navigate("/Projects")} className={orbButtonClass}>
                 <Suspense fallback={<OrbPlaceholder />}>
-                  <OrbButton onClick={() => navigate("/Projects")} lightX={-2.5}/>
+                  <OrbButton lightX={-2.5} />
                 </Suspense>
-                <p className="heading mt-2 max-w-[200px]">Projects</p>
-              </div>
+                <span className="heading mt-2 max-w-[200px]">Projects</span>
+              </button>
             </div>
             {/* Featured projects: same data as the Projects page (src/data/projects.ts) */}
             <section aria-labelledby="home-featured-heading" className="mt-20 w-full flex flex-col items-center">
@@ -198,6 +209,7 @@ function HomePage() {
               </button>
             </section>
           </div>
+          </main>
           <Footer />
         </div>
       </PageTransition>
