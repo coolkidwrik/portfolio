@@ -18,12 +18,26 @@ export const TechTags: React.FC<{ tech: string[]; className?: string }> = ({ tec
 const ProjectLinks: React.FC<{ project: Project; size: "sm" | "md" }> = ({ project, size }) => (
   <div className="flex flex-wrap gap-2">
     {project.liveUrl && (
-      <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className={`${primaryButton} ${buttonSizes[size]}`}>
+      <a
+        href={project.liveUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        // Several cards share the visible text "Live site" / "Code", so each link's
+        // accessible name includes the project, e.g. "Travel Blog: live site (opens in new tab)".
+        aria-label={`${project.title}: ${(project.liveLabel ?? "Live site").toLowerCase()} (opens in new tab)`}
+        className={`${primaryButton} ${buttonSizes[size]}`}
+      >
         <FaExternalLinkAlt aria-hidden="true" className="text-[0.8em]" /> {project.liveLabel ?? "Live site"}
       </a>
     )}
     {project.codeUrl && (
-      <a href={project.codeUrl} target="_blank" rel="noopener noreferrer" className={`${secondaryButton} ${buttonSizes[size]}`}>
+      <a
+        href={project.codeUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`${project.title}: code on GitHub (opens in new tab)`}
+        className={`${secondaryButton} ${buttonSizes[size]}`}
+      >
         <FaGithub aria-hidden="true" /> Code
       </a>
     )}
@@ -41,6 +55,7 @@ export const FeaturedProjectRow: React.FC<{ project: FeaturedProjectData; revers
       video={project.featured.video}
       poster={project.featured.poster}
       label={`${project.title} demo`}
+      sizes="(min-width: 1024px) 45vw, 100vw"
       className={reverse ? "lg:order-2" : ""}
     />
     <div className="text-left">
@@ -71,6 +86,7 @@ export const FeaturedProjectCard: React.FC<{ project: FeaturedProjectData }> = (
       video={project.featured.video}
       poster={project.featured.poster}
       label={`${project.title} demo`}
+      sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw"
       className="rounded-none border-0 border-b border-white/10"
     />
     <div className="flex grow flex-col p-5">

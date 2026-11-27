@@ -4,9 +4,9 @@
 
 My personal portfolio: a React + TypeScript single-page app with an interactive Three.js scene, custom GLSL shaders, and scroll-driven camera animation.
 
-![Hero section: a 3D space scene with my name over it](docs/hero.jpg)
+![Hero section: a 3D space scene with my name over it](public/portfolio.png)
 
-![About section: photo and bio side by side](docs/about.jpg)
+![About section: photo and bio side by side](public/about_me.png)
 
 ## Features
 
@@ -46,7 +46,8 @@ The orb buttons ([`OrbButton.tsx`](src/utils/OrbButton.tsx)) are tiny separate s
 - **Code splitting.** Three.js, the scene and the orbs load on demand, only on the home page, so visitors who land on Projects or Experiences never download them. React, Framer Motion and Three.js each get their own file (see [`vite.config.ts`](vite.config.ts)), so they stay cached between deploys.
 - **Lightweight images and clips.** The profile photo and scene background are WebP. The project clips are small MP4s that only download and play while on screen.
 
-On a simulated slow 4G connection, the home page went from downloading 8.2 MB to 1.5 MB, and the full 3D scene now loads in about 8 seconds instead of 42.
+Performance was measured using chrome dev-tools: light house before and after optimizations
+on a simulated slow 4G connection. the home page went from downloading 8.2 MB to 1.5 MB, FCP imrpoved from 2.3s to 1.9s, and LCP improved from 15.5s to 2.8s.
 
 ### Adding or replacing a 3D model
 
