@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import ExperiencesPage from './pages/ExperiencesPage';
 import HomePage from './pages/HomePage';
 import ProjectsPage from './pages/ProjectsPage';
+import NotFoundPage from './pages/notFoundPage';
 import ScrollToTop from './utils/scrollToTop';
 import { MotionConfig } from 'framer-motion';
 ///////////////////////////////////////////////////////
@@ -22,6 +23,8 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/Experiences" element={<ExperiencesPage />} />
         <Route path="/Projects" element={<ProjectsPage />} />
+        {/* Any other URL: show a "Page not found" page instead of a blank screen */}
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>
     </MotionConfig>
