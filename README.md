@@ -79,7 +79,8 @@ src/
 ├── App.tsx              # routes
 ├── App.css, index.css   # global and component styles
 └── tailwind.css         # Tailwind directives (compiled at build time)
-public/                  # profile photo, favicon, link-preview image, robots.txt, sitemap.xml
+public/                  # profile photo, favicon, link-preview image, robots.txt, sitemap.xml,
+│                        # resume.pdf (published automatically, see Résumé)
 └── media/               # project clips (MP4) and posters (WebP)
 vercel.json              # SPA rewrite so deep links like /Projects work
 ```
@@ -105,6 +106,14 @@ npm run dev        # dev server at http://localhost:5173
 ## Deployment
 
 The site is deployed on Vercel, which builds `main` automatically. [`vercel.json`](vercel.json) rewrites every path with no matching file to `index.html`, so React Router can handle routes like `/Projects` on a direct visit or refresh.
+
+## Resume
+ 
+The resume at [`/resume.pdf`](https://ckwrik.vercel.app/resume.pdf) is built automatically rather than uploaded by hand. Its LaTeX source lives in a separate private repository, so drafts and tailored versions stay private and only the main resume is published.
+ 
+1. Pushing a change to the main LaTeX file triggers a GitHub Actions workflow in the private repo.
+2. The workflow compiles it with TeX Live (the same distribution Overleaf uses) and commits the PDF, plus a preview image, back to that repo.
+3. It then commits only the PDF to this repo's `dev` branch as `public/resume.pdf`, using a fine-grained token that can write to this repository and nothing else.
 
 ## Credits
 
